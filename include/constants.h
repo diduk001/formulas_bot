@@ -8,7 +8,7 @@
 #include <string>
 
 namespace consts {
-    const std::string TOKEN = "7041771878:AAEtRcUXq5mzxGg0imb52ucMR-o4rKDdeYA";
+    const std::string TOKEN = "...";
     const std::string DB_NAME = "../chinook.db";
 }
 
