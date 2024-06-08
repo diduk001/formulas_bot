@@ -45,7 +45,7 @@ namespace db {
     void create_working_db() {
         //Table user
         sqlite3_stmt *statement;
-        int rc = sqlite3_prepare_v2(db_conn, "CREATE TABLE IF NOT EXISTS user (user_id INTEGER PRIMARY KEY, tg_id INTEGER)".c_str(), -1, &statement, 0);
+        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_user.c_str(), -1, &statement, 0);
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);
             throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
@@ -54,8 +54,7 @@ namespace db {
 
         //Table group
         sqlite3_stmt *statement;
-        int rc = sqlite3_prepare_v2(db_conn, "CREATE TABLE IF NOT EXISTS `group` (group_id INTEGER PRIMARY KEY,"
-                                             " group_name TEXT, tg_id INTEGER, owner_id INTEGER, FOREIGN KEY (owner_id) REFERENCES user (user_id))".c_str(), -1, &statement, 0);
+        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_group.c_str(), -1, &statement, 0);
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);
             throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
@@ -64,8 +63,7 @@ namespace db {
 
         //Table subject
         sqlite3_stmt *statement;
-        int rc = sqlite3_prepare_v2(db_conn, "CREATE TABLE IF NOT EXISTS subject (subject_id INTEGER PRIMARY KEY, subject_name TEXT, group_id INTEGER, "
-                                             "description TEXT, professor_name TEXT, professor_email TEXT, FOREIGN KEY (group_id) REFERENCES `group` (group_id))".c_str(), -1, &statement, 0);
+        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_subject.c_str(), -1, &statement, 0);
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);
             throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
@@ -73,8 +71,7 @@ namespace db {
         sqlite3_step(statement);
 
         //Table element
-        int rc = sqlite3_prepare_v2(db_conn, "CREATE TABLE IF NOT EXISTS element (element_id INTEGER PRIMARY KEY, name TEXT, subject_id INTEGER, value REAL, "
-                                             "block INTEGER, description TEXT, FOREIGN KEY (subject_id) REFERENCES Subject (subject_id))".c_str(), -1, &statement, 0);
+        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_element.c_str(), -1, &statement, 0);
         sqlite3_stmt *statement;
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);

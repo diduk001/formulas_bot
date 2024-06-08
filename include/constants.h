@@ -18,6 +18,13 @@ namespace messages {
 
 namespace db_queries {
     const std::string basic_where_from_customers = "SELECT FirstName FROM customers WHERE Country=?";
+    const std::string create_table_user = "CREATE TABLE IF NOT EXISTS user (user_id INTEGER PRIMARY KEY, tg_id INTEGER)";
+    const std::string create_table_group = "CREATE TABLE IF NOT EXISTS `group` (group_id INTEGER PRIMARY KEY,"
+                                           " group_name TEXT, tg_id INTEGER, owner_id INTEGER, FOREIGN KEY (owner_id) REFERENCES user (user_id))";
+    const std::string create_table_subject = "CREATE TABLE IF NOT EXISTS subject (subject_id INTEGER PRIMARY KEY, subject_name TEXT, group_id INTEGER,"
+                                             " description TEXT, professor_name TEXT, professor_email TEXT, FOREIGN KEY (group_id) REFERENCES `group` (group_id))";
+    const std::string create_table_element = "CREATE TABLE IF NOT EXISTS element (element_id INTEGER PRIMARY KEY, name TEXT, subject_id INTEGER, value REAL,"
+                                             " block INTEGER, description TEXT, FOREIGN KEY (subject_id) REFERENCES Subject (subject_id))";
 }
 
 #endif //FORMULAS_BOT_CONSTANTS_H
