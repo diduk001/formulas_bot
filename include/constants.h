@@ -17,7 +17,11 @@ namespace messages {
 }
 
 namespace db_queries {
+    //Select
     const std::string basic_where_from_customers = "SELECT FirstName FROM customers WHERE Country=?";
+    const std::string basic_where_from_element = "SELECT * FROM Element WHERE element_id = ?";
+
+    //Create
     const std::string create_table_user = "CREATE TABLE IF NOT EXISTS user (user_id INTEGER PRIMARY KEY, tg_id INTEGER)";
     const std::string create_table_group = "CREATE TABLE IF NOT EXISTS `group` (group_id INTEGER PRIMARY KEY,"
                                            " group_name TEXT, tg_id INTEGER, owner_id INTEGER, FOREIGN KEY (owner_id) REFERENCES user (user_id))";
