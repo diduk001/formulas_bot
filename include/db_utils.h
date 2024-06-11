@@ -79,6 +79,15 @@ namespace db {
         }
         sqlite3_step(statement);
 
+        //Table map
+        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_map.c_str(), -1, &statement, 0);
+        sqlite3_stmt *statement;
+        if (rc != SQLITE_OK) {
+            sqlite3_close(db_conn);
+            throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
+        }
+        sqlite3_step(statement);
+
         sqlite3_finalize(statement);
     }
 }
