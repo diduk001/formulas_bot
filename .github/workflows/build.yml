@@ -8,6 +8,7 @@ on:
       - '**.cpp'
       - '**.h'
       - 'CMakeLists.txt'
+  workflow_dispatch:
 
 jobs:
   build-and-test:
