@@ -31,12 +31,9 @@ jobs:
 
       - name: Check code format with clang-format
         run: find . -not -path "./lib/*" \( -iname "*.h" -o -iname "*.cpp" \) -print0 | xargs clang-format -i --Werror
-        working-directory: ${{ env.BRANCH_NAME }}
 
       - name: Check with cpplint
         run: cpplint --exclude=lib/ --filter=-legal/copyright,-build/include_subdir --recursive .
-        working-directory: ${{ env.BRANCH_NAME }}
 
       - name: Check with cppcheck
         run: cppcheck --std=c++20 -i lib .
-        working-directory: ${{ env.BRANCH_NAME }}
