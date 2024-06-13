@@ -15,8 +15,10 @@
 1. Нужно рекурсивно склонировать этот репозиторий - `git clone --recursive https://github.com/diduk001/formulas_bot`
 2. Нужно поставить зависимости-библиотеки (пишу под Ubuntu): `sudo apt-get install libssl-dev libboost-system-dev libcurl4-openssl-dev libsqlite3-dev`
 3. Нужно поставить CMake
+4. Нужно поставить библиотеку GTest, о том, как это сделать, написано [в доке](https://www.sqlitetutorial.net/sqlite-sample-database/)
 
 ## Компиляция и сборка
+0. Поставить нужный токен в `./include/constants.h`
 1. `mkdir build`
 2. `cd build`
 3. `cmake ..`
@@ -32,4 +34,4 @@
 - Тесты пишутся в tests/ . Хочется, чтобы они писались
 - Все взаимодействие происходит через форки и PRы, когда-нибудь я накручу github actions
 
-База chinook.db лежит [здесь](https://www.sqlitetutorial.net/wp-content/uploads/2018/03/chinook.zip)
+База chinook.db лежит [здесь](https://www.sqlitetutorial.net/wp-content/uploads/2018/03/chinook.zip), а ее схема - [тут](https://www.sqlitetutorial.net/sqlite-sample-database/)

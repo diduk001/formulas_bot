@@ -7,17 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(Boost_USE_MULTITHREADED ON)
 
-# -- GTest including --
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        # Specify the commit you depend on and update it regularly.
-        URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
-)
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-# -- --
 
 # -- TgBot requirements --
 find_package(Threads REQUIRED)
@@ -39,6 +28,7 @@ target_link_libraries(formulas_bot TgBot ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIB
 
 # Enable Google Tests
 enable_testing()
+find_package(GTest REQUIRED)
 
 add_executable(
         example_test
