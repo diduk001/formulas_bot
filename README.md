@@ -8,6 +8,7 @@
 2. Используется БД sqlite3 (о взаимодействии можно почитать [тут](https://sqlite.org/c3ref/intro.html))
 3. Используется CMake
 4. Используется Google Test ([репозиторий](https://github.com/google/googletest), [документация](https://google.github.io/googletest/))
+5. Используется [clang-format](https://clang.llvm.org/docs/ClangFormat.html) ([google codestyle](https://google.github.io/styleguide/cppguide.html))
 
 Бот (на данной версии) умеет отвечать сообщением на комаду `/start` и искать в определенной табличке базы по ключу страны, выбранной пользователем
 

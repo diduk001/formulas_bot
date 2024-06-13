@@ -8,16 +8,17 @@
 #include <string>
 
 namespace consts {
-    const std::string TOKEN = "...";
-    const std::string DB_NAME = "../chinook.db";
-}
+const std::string TOKEN = "...";
+const std::string DB_NAME = "../chinook.db";
+}  // namespace consts
 
 namespace messages {
-    const std::string HI = "Hi!";
+const std::string HI = "Hi!";
 }
 
 namespace db_queries {
-    const std::string basic_where_from_customers = "SELECT FirstName FROM customers WHERE Country=?";
+const std::string basic_where_from_customers =
+    "SELECT FirstName FROM customers WHERE Country=?";
 }
 
-#endif //FORMULAS_BOT_CONSTANTS_H
+#endif  // FORMULAS_BOT_CONSTANTS_H
