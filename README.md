@@ -17,7 +17,7 @@
 1. Нужно рекурсивно склонировать этот репозиторий - `git clone --recursive https://github.com/diduk001/formulas_bot`
 2. Нужно поставить зависимости-библиотеки (пишу под Ubuntu): `sudo apt install libssl-dev libboost-system-dev libcurl4-openssl-dev libsqlite3-dev`
 3. Нужно поставить CMake
-4. Нужно поставить библиотеку GTest, о том, как это сделать, написано [в доке](https://www.sqlitetutorial.net/sqlite-sample-database/)
+4. Нужно поставить библиотеку GTest, о том, как это сделать, написано [в доке](https://github.com/google/googletest/blob/main/googletest/README.md#standalone-cmake-project)
 
 ## Компиляция и сборка
 0. Поставить нужный токен в `./include/constants.h`
