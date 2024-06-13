@@ -1,10 +1,11 @@
-#ifndef FORMULAS_TMP_DB_UTILS_H
-#define FORMULAS_TMP_DB_UTILS_H
+#ifndef INCLUDE_DB_UTILS_H_
+#define INCLUDE_DB_UTILS_H_
 
 #include <sqlite3.h>
 
 #include <memory>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 #include "constants.h"
@@ -13,8 +14,8 @@ namespace db {
 sqlite3 *db_conn;
 
 void init_conn() {
-  // TODO: было бы прикольно придумать, как тут использовать std::unique_ptr
-  int rc = sqlite3_open(consts::DB_NAME.c_str(), &db_conn);
+  // TODO(diduk001): придумать, как тут использовать std::unique_ptr
+  int rc = sqlite3_open(consts::DB_NAME, &db_conn);
   if (rc != SQLITE_OK) {
     sqlite3_close(db_conn);
     throw std::runtime_error("Error while connecting db");
@@ -23,8 +24,7 @@ void init_conn() {
 
 std::vector<std::string> basic_where(const std::string &clause_value) {
   sqlite3_stmt *statement;
-  int rc = sqlite3_prepare_v2(db_conn,
-                              db_queries::basic_where_from_customers.c_str(),
+  int rc = sqlite3_prepare_v2(db_conn, db_queries::basic_where_from_customers,
                               -1, &statement, 0);
   if (rc != SQLITE_OK) {
     sqlite3_close(db_conn);
@@ -46,4 +46,4 @@ std::vector<std::string> basic_where(const std::string &clause_value) {
 void close_conn() { sqlite3_close(db_conn); }
 }  // namespace db
 
-#endif  // FORMULAS_TMP_DB_UTILS_H
+#endif  // INCLUDE_DB_UTILS_H_

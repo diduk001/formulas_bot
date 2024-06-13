@@ -2,23 +2,24 @@
 // Created by Stepan Didurenko on 05.06.2024.
 //
 
-#ifndef FORMULAS_BOT_CONSTANTS_H
-#define FORMULAS_BOT_CONSTANTS_H
+#ifndef INCLUDE_CONSTANTS_H_
+#define INCLUDE_CONSTANTS_H_
 
 #include <string>
 
 namespace consts {
-const std::string TOKEN = "...";
-const std::string DB_NAME = "../chinook.db";
+// TODO(diduk001): проверять регексом в compile-time
+constexpr char TOKEN[] = "...";
+constexpr char DB_NAME[] = "../chinook.db";
 }  // namespace consts
 
 namespace messages {
-const std::string HI = "Hi!";
+constexpr char HI[] = "Hi!";
 }
 
 namespace db_queries {
-const std::string basic_where_from_customers =
+constexpr char basic_where_from_customers[] =
     "SELECT FirstName FROM customers WHERE Country=?";
 }
 
-#endif  // FORMULAS_BOT_CONSTANTS_H
+#endif  // INCLUDE_CONSTANTS_H_

@@ -9,12 +9,13 @@
 3. Используется CMake
 4. Используется Google Test ([репозиторий](https://github.com/google/googletest), [документация](https://google.github.io/googletest/))
 5. Используется [clang-format](https://clang.llvm.org/docs/ClangFormat.html) ([google codestyle](https://google.github.io/styleguide/cppguide.html))
+6. Используется статический анализатор [cpplint](https://github.com/cpplint/cpplint) и [cppcheck](https://cppcheck.sourceforge.io) (в CI Github Actions)
 
 Бот (на данной версии) умеет отвечать сообщением на комаду `/start` и искать в определенной табличке базы по ключу страны, выбранной пользователем
 
 ## Зависимости, установка
 1. Нужно рекурсивно склонировать этот репозиторий - `git clone --recursive https://github.com/diduk001/formulas_bot`
-2. Нужно поставить зависимости-библиотеки (пишу под Ubuntu): `sudo apt-get install libssl-dev libboost-system-dev libcurl4-openssl-dev libsqlite3-dev`
+2. Нужно поставить зависимости-библиотеки (пишу под Ubuntu): `sudo apt install libssl-dev libboost-system-dev libcurl4-openssl-dev libsqlite3-dev`
 3. Нужно поставить CMake
 4. Нужно поставить библиотеку GTest, о том, как это сделать, написано [в доке](https://www.sqlitetutorial.net/sqlite-sample-database/)
 
@@ -33,6 +34,13 @@
 
 - Все основное происходит в main.cpp, все основное масштабное - в сторонних файлах в include/
 - Тесты пишутся в tests/ . Хочется, чтобы они писались
-- Все взаимодействие происходит через форки и PRы, когда-нибудь я накручу github actions
+- Все взаимодействие происходит через форки и PRы, на каждый PR заводится Github workflow, который проверяет:
+  - Сборку
+  - clang-tidy
+  - cpplint
+  - cppcheck
+  - Тесты
+- Чтобы проверить локально, нужно запустить файл `./formatters.sh`
+  - Предварительно надо установить [`cpplint`](https://github.com/cpplint/cpplint?tab=readme-ov-file#installation), [`cppcheck`](https://cppcheck.sourceforge.io) и `clang-tidy`
 
 База chinook.db лежит [здесь](https://www.sqlitetutorial.net/wp-content/uploads/2018/03/chinook.zip), а ее схема - [тут](https://www.sqlitetutorial.net/sqlite-sample-database/)
