@@ -1,3 +1,5 @@
+[![Build & test](https://github.com/diduk001/formulas_bot/actions/workflows/build.yml/badge.svg)](https://github.com/diduk001/formulas_bot/actions/workflows/build.yml)
+[![Linters & Formatters](https://github.com/diduk001/formulas_bot/actions/workflows/linters.yml/badge.svg)](https://github.com/diduk001/formulas_bot/actions/workflows/linters.yml)
 # Бот для получения оценок
 
 > Пока что тут информация об установке и шаблоне, но когда-нибудь будет полноценное руководство
