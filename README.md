@@ -42,6 +42,7 @@
   - cpplint
   - cppcheck
   - Тесты
+- Без PR и ревью помержить нельзя.
 - Чтобы проверить локально, нужно запустить файл `./formatters.sh`
   - Предварительно надо установить [`cpplint`](https://github.com/cpplint/cpplint?tab=readme-ov-file#installation), [`cppcheck`](https://cppcheck.sourceforge.io) и `clang-tidy`
 
