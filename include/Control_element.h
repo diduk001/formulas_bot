@@ -27,7 +27,7 @@ public:
 
     Control_element(size_t id, std::string name, float coef, bool is_block, float mark, std::string description);
 
-    Control_element(sqlite3 *db_conn, size_t id);
+    Control_element(size_t id);
 
     ~Control_element();
 
@@ -66,11 +66,11 @@ public:
     std::string print() const;
 
     //Operations
-    void commit(sqlite3 *db_conn, size_t subject_id);
+    void commit(size_t subject_id);
 
-    void from_db(sqlite3 *db_conn, size_t id);
+    void from_db(size_t id);
 
-    void erase(sqlite3 *db_conn) const;
+    void erase() const;
 };
 
-#endif HSE_1COURSE_PROJECT_Control_element_H
+#endif //HSE_1COURSE_PROJECT_Control_element_H

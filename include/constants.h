@@ -17,9 +17,18 @@ namespace messages {
 }
 
 namespace db_queries {
+    //Insert
+    const std::string insert_element = "INSERT INTO element (name, subject_id, value, block, description) VALUES (?, ?, ?, ?, ?)";
+
     //Select
     const std::string basic_where_from_customers = "SELECT FirstName FROM customers WHERE Country=?";
-    const std::string basic_where_from_element = "SELECT * FROM Element WHERE element_id = ?";
+    const std::string basic_where_from_element = "SELECT * FROM element WHERE element_id = ?";
+
+    //Update
+    const std::string update_element = "UPDATE Element SET name = ?, value = ?, block = ?, description = ? WHERE id = ?";
+
+    //Delete
+    const std::string delete_where_from_element = "DELETE FROM element WHERE id = ?";
 
     //Create
     const std::string create_table_user = "CREATE TABLE IF NOT EXISTS user (user_id INTEGER PRIMARY KEY, tg_id INTEGER)";

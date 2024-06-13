@@ -54,18 +54,17 @@ Control_element::Control_element(size_t id) {
 
     db::init_conn();
     const auto query_result = db::basic_where(db_queries::basic_where_from_element, std::to_string(id));
-    if (res) {
+    if (query_result) {
         this->id = id;
-        this->name = res->getString("name");
-        this->coef = res->getDouble("value");
-        this->is_blocking = res->getBoolean("block");
+        this->name = query_result[1];
+        this->coef = std::stof(query_result[3]);
+        this->is_blocking = query_result[4] == "1" ? true : false;
         this->mark = -1;
-        this->description = res->getString("decription");
+        this->description = query_result[5];
     }
     else
         std::cout << "Failed to get element from db" << std::endl;
-    res->close();
-    pstmt->close();
+    db::close_conn();
 }
 
 Control_element::~Control_element() = default;
@@ -145,12 +144,12 @@ Control_element& Control_element::operator=(const Control_element& other) {
 
 std::string Control_element::print() const {
     std::string output;
-    output = std::format("��������: {}\n�����������: {}\n����������� �� �������: {}\n�������������� ����������: {}",
+    output = std::format("Название: {}\nКоэффициент: {}\nБлокирующий ли элемент: {}\nОписание элемента: {}",
                           this->get_name(), this->get_coef(), this->get_blocking(), this->description);
     return output;
 }
 
-void Control_element::commit(sql::Connection* conn, size_t subject_id) {
+void Control_element::commit(size_t subject_id) {
     sql::PreparedStatement* pstmt = conn->prepareStatement("INSERT INTO Element (name, subject_id, value, block, description) VALUES (?, ?, ?, ?, ?)");
     if (this->get_id() == 0) {
         pstmt->setString(1, this->name);
@@ -170,7 +169,6 @@ void Control_element::commit(sql::Connection* conn, size_t subject_id) {
         stmt->close();
     }
     else {
-        sql::PreparedStatement* pstmt = conn->prepareStatement("UPDATE Element SET name = ?, value = ?, block = ?, description = ? WHERE id = ?;");
         pstmt->setString(1, this->name);
         pstmt->setDouble(2, this->coef);
         pstmt->setBoolean(3, this->is_blocking);
@@ -180,28 +178,22 @@ void Control_element::commit(sql::Connection* conn, size_t subject_id) {
     pstmt->close();
 }
 
-void Control_element::erase(sql::Connection* conn) const {
-    if (this->id != 0) {
-        sql::Statement* stmt = conn->createStatement();
-        stmt->execute("DELETE FROM Element WHERE id = " + std::to_string(this->id) + ";");
-        stmt->close();
-    }
+void Control_element::erase() const {
+    if (this->id != 0)
+        db::delete_where(db_queries::delete_where_from_element, std::to_string(id));
 }
 
-void Control_element::from_db(sql::Connection* conn, size_t id) {
-    sql::PreparedStatement* pstmt = conn->prepareStatement("SELECT * FROM Element WHERE element_id = ?");
-    pstmt->setDouble(1, id);
-    sql::ResultSet* res(pstmt->executeQuery());
-    if (res) {
+void Control_element::from_db(size_t id) {
+    const auto query_result = db::basic_where(db_queries::basic_where_from_element, std::to_string(id));
+    if (query_result) {
         this->id = id;
-        this->name = res->getString("name");
-        this->coef = res->getDouble("value");
-        this->is_blocking = res->getBoolean("block");
+        this->name = query_result[1];
+        this->coef = std::stof(query_result[3]);
+        this->is_blocking = query_result[4] == "1" ? true : false;
         this->mark = -1;
-        this->description = res->getString("decription");
+        this->description = query_result[5];
     }
     else
         std::cout << "Failed to get element from db" << std::endl;
-    res->close();
-    pstmt->close();
+    db::close_conn();
 }

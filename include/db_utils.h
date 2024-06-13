@@ -19,9 +19,27 @@ namespace db {
         }
     }
 
-    std::vector<std::string> basic_where(const std::string &clause_value) {
+    void insert_element(const std::string &name, size_t subject_id, float coef, bool is_blocking, const std::string& description) {
         sqlite3_stmt *statement;
-        int rc = sqlite3_prepare_v2(db_conn, db_queries::basic_where_from_customers.c_str(), -1, &statement, 0);
+        int rc = sqlite3_prepare_v2(db_conn, query.c_str(), -1, &statement, 0);
+        if (rc != SQLITE_OK) {
+            sqlite3_close(db_conn);
+            throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
+        }
+
+        sqlite3_bind_text(statement, 1, name.c_str(), -1, SQLITE_STATIC);
+        sqlite3_bind_int64(statement, 2, subject_id, -1, SQLITE_STATIC);
+        sqlite3_bind_double(statement, 3, coef, -1, SQLITE_STATIC);
+        sqlite3_bind_int(statement, 4, (is_blocking ? true : false), -1, SQLITE_STATIC);
+        sqlite3_bind_text(statement, 5, description.c_str(), -1, SQLITE_STATIC);
+
+        sqlite3_step(statement);
+        sqlite3_finalize(statement);
+    }
+
+    std::vector<std::string> basic_where(const std::string &query, const std::string &clause_value) {
+        sqlite3_stmt *statement;
+        int rc = sqlite3_prepare_v2(db_conn, query.c_str(), -1, &statement, 0);
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);
             throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
@@ -36,6 +54,19 @@ namespace db {
         }
         sqlite3_finalize(statement);
         return result;
+    }
+
+    void delete_where_id(const std::string &query, size_t id) { //в большинстве случаев будем удалять по айдишнику
+        sqlite3_stmt *statement;
+        int rc = sqlite3_prepare_v2(db_conn, query.c_str(), -1, &statement, 0);
+        if (rc != SQLITE_OK) {
+            sqlite3_close(db_conn);
+            throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
+        }
+
+        sqlite3_bind_int64(statement, 1, id, -1, SQLITE_STATIC);
+        sqlite3_step(statement);
+        sqlite3_finalize(statement);
     }
 
     void close_conn() {
@@ -53,8 +84,7 @@ namespace db {
         sqlite3_step(statement);
 
         //Table group
-        sqlite3_stmt *statement;
-        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_group.c_str(), -1, &statement, 0);
+        rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_group.c_str(), -1, &statement, 0);
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);
             throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
@@ -62,8 +92,7 @@ namespace db {
         sqlite3_step(statement);
 
         //Table subject
-        sqlite3_stmt *statement;
-        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_subject.c_str(), -1, &statement, 0);
+        rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_subject.c_str(), -1, &statement, 0);
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);
             throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
@@ -71,8 +100,7 @@ namespace db {
         sqlite3_step(statement);
 
         //Table element
-        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_element.c_str(), -1, &statement, 0);
-        sqlite3_stmt *statement;
+        rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_element.c_str(), -1, &statement, 0);
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);
             throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
@@ -80,8 +108,7 @@ namespace db {
         sqlite3_step(statement);
 
         //Table map
-        int rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_map.c_str(), -1, &statement, 0);
-        sqlite3_stmt *statement;
+        rc = sqlite3_prepare_v2(db_conn, db_queries::create_table_map.c_str(), -1, &statement, 0);
         if (rc != SQLITE_OK) {
             sqlite3_close(db_conn);
             throw std::runtime_error("Error while preparing statement. Error code = " + std::to_string(rc));
