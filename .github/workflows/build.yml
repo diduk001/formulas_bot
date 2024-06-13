@@ -38,5 +38,5 @@ jobs:
         uses: threeal/cmake-action@main
 
       - name: Run Test
-        run: ./*_test
+        run: ./CMakeFiles/*_test.dir/tests/*test
         working-directory: ${{ env.BRANCH_NAME }}
