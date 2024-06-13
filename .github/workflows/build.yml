@@ -1,4 +1,4 @@
-name: Build & Tests
+name: Build & test
 
 on:
   pull_request:
@@ -37,6 +37,5 @@ jobs:
       - name: Build with cmake
         uses: threeal/cmake-action@main
 
-      - name: Run Test
-        run: ./CMakeFiles/*_test.dir/tests/*test
-        working-directory: ${{ env.BRANCH_NAME }}
+      - name: Run tests
+        run: ./build/*test
