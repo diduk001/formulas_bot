@@ -24,7 +24,6 @@ Group_State getState(int64_t userId) {
 
 
 int main(){
-
     TgBot::Bot bot("...");
 
     //КЛАВИАТУРА для ответа да/нет 1

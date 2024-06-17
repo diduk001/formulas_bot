@@ -8,6 +8,7 @@ class Group {
     std::string group_name;
     int64_t tg_id;
     int64_t owner_id;
+    
 public:
     Group();
 
