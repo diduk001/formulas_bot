@@ -1,8 +1,8 @@
 
 #include <iostream>
 #include <string>
-#ifndef FORMULAS_BOT_INCLUDE_MODELS_GROUP_H_
-#define FORMULAS_BOT_INCLUDE_MODELS_GROUP_H_
+#ifndef INCLUDE_MODELS_GROUP_H_
+#define INCLUDE_MODELS_GROUP_H_
 
 class Group {
   std::string group_name;
@@ -26,4 +26,4 @@ class Group {
   int64_t get_owner_id() const;
 };
 
-#endif  // FORMULAS_BOT_INCLUDE_MODELS_GROUP_H_
+#endif  // INCLUDE_MODELS_GROUP_H_

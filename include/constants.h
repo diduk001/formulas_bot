@@ -2,8 +2,8 @@
 // Created by Stepan Didurenko on 05.06.2024.
 //
 
-#ifndef FORMULAS_BOT_INCLUDE_CONSTANTS_H_
-#define FORMULAS_BOT_INCLUDE_CONSTANTS_H_
+#ifndef INCLUDE_CONSTANTS_H_
+#define INCLUDE_CONSTANTS_H_
 
 #include <string>
 #include <utility>
@@ -75,4 +75,4 @@ constexpr char basic_where_from_customers[] =
     "SELECT FirstName FROM customers WHERE Country=?";
 }
 
-#endif  // FORMULAS_BOT_INCLUDE_CONSTANTS_H_
+#endif  // INCLUDE_CONSTANTS_H_
