@@ -1,18 +1,19 @@
 #include <tgbot/tgbot.h>
 
 #include <cstdio>
-
 #include "../include/constants.h"
 #include "../include/db_utils.h"
+using namespace keyboards;
 
 int main() {
+  keyboards::init_keyboards();
   db::init_conn();
 
   TgBot::Bot bot(consts::TOKEN);
-  bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
-    bot.getApi().sendMessage(message->chat->id, messages::HI);
+  bot.getEvents().onCommand("start", [&bot, &making_discipline_keyboard](TgBot::Message::Ptr message) {
+    bot.getApi().sendMessage(message->chat->id, messages::HI, nullptr, nullptr, making_discipline_keyboard);
   });
-  bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
+  bot.getEvents().onAnyMessage([&bot](const TgBot::Message::Ptr& message) {
     printf("User wrote %s\n", message->text.c_str());
     if (StringTools::startsWith(message->text, "/start")) {
       return;
