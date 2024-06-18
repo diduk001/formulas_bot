@@ -24,7 +24,9 @@ jobs:
         run: |
           echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
           
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
           sudo apt update
+          sudo apt install gcc-13 g++-13
           sudo apt install -y cmake libboost-system-dev libcurl4-openssl-dev libgtest-dev libssl-dev libsqlite3-dev
 
       - name: Install gtest
@@ -36,6 +38,9 @@ jobs:
 
       - name: Build with cmake
         uses: threeal/cmake-action@main
+        env:
+          CC: gcc-13
+          CXX: g++-13
 
       - name: Run tests
         run: ./build/*test
