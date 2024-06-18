@@ -10,7 +10,7 @@ Group::Group(std::string name, int64_t id) {
     this->owner_id = id;
 };
 
-Group::~Group() {};
+Group::~Group() = default;
 
 void Group::set_group_name(const std::string &name) {
     this->group_name = name;

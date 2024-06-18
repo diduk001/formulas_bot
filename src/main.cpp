@@ -87,8 +87,7 @@ int main() {
       // тут должно возвращаться в изначальное меню с кнопочками групп
       // вернуться в меню
   } else if (query->data == button_datas::JoinGroup) {
-      // добавляем в базу данных пользователя, которых нажал на кнопочку
-      int64_t userId=query->message->from->id;
+      // добавляем в базу данных пользователя, которых нажал на кнопочку 
   }
   });
 
@@ -106,7 +105,7 @@ int main() {
           JoinGroup->url = urls::UrlForChatWithBot +std::to_string(tg_id);
           buttons3.emplace_back(JoinGroup);
           keyboardJoin->inlineKeyboard.emplace_back(buttons3);
-          bot.getApi().sendMessage(message->chat->id, messages::ButtonToJoinGroup ,false,0,keyboardJoin);
+          bot.getApi().sendMessage(message->chat->id, messages::ButtonToJoinGroup , NULL, 0, keyboardJoin);
       }
   });
 
@@ -128,7 +127,7 @@ int main() {
           bot.getApi().sendMessage(userId, messages::DeletedGroup);
           // вернуться в меню группы
       } else {
-          bot.getApi().sendMessage(userId, messages::AdminDeleteGroup, false, 0, keyboardYesNo2);
+          bot.getApi().sendMessage(userId, messages::AdminDeleteGroup, NULL, 0, keyboardYesNo2);
       } 
   });
 
@@ -155,7 +154,7 @@ int main() {
           printf("Name of group: %s\n", message->text.c_str());
           userGroup[userId].set_group_name(message->text);
           bot.getApi().sendMessage(userId, messages::SavedNameGroup);
-          bot.getApi().sendMessage(userId, messages::QuestJoinBot, false, 0, keyboardYesNo1);
+          bot.getApi().sendMessage(userId, messages::QuestJoinBot, NULL, 0, keyboardYesNo1);
           setState(userId, Group_State::NONE);
           // вернуться в меню группы
       } else if (state == Group_State::WAITING_FOR_NEW_GROUP_NAME) {
