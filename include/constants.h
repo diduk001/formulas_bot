@@ -9,7 +9,7 @@
 
 namespace consts {
 // TODO(diduk001): проверять регексом в compile-time
-constexpr char TOKEN[] = "...";
+constexpr char TOKEN[] = "7041771878:AAHV0wS6Xkc_bn9RFbL9hn2RuQB1yzcaUiQ";
 constexpr char DB_NAME[] = "../chinook.db";
 }  // namespace consts
 
@@ -17,47 +17,81 @@ namespace messages {
 constexpr char HI[] = "Hi!";
 constexpr char CreatedGroup[] = "Группа создана.";
 constexpr char DeletedGroup[] = "Группа удалена.";
-constexpr char JoinChat[] =
-    "Привет, я бот, который поможет тебе структурировать всю информацию о "
-    "твоих учебных предметах. \nНажимай на кнопку, и я добавлю тебя в группу, "
-    "где будет храниться вся информация.";
-constexpr char ButtonToJoinGroup[] =
-    "Нажми на кнопочку и тебя добавят в группу.";
 constexpr char PrintGroupName[] = "Введите название группы:";
 constexpr char PrintNewGroupName[] = "Введите новое название группы:";
-constexpr char AdminDeleteGroup[] =
-    "Вы точно хотите удалить группу, в которой являетесь владельцем?";
-constexpr char NoAdminGroup[] = "Вы не являетесь админом группы.";
 constexpr char SavedNameGroup[] = "Имя группы сохранено.";
 constexpr char SavedNewNameGroup[] = "Новое имя группы сохранено.";
-constexpr char QuestJoinBot[] = "Хотите ли вы добавить бота в чат?";
 }  // namespace messages
 
 namespace button_names {
 constexpr char Yes[] = "Да";
 constexpr char No[] = "Нет";
-constexpr char GroupJoin[] = "Присоединиться к группе.";
+constexpr char create_group[] = "Создать группу";
+constexpr char edit_group[] = "Изменить имя группы";
+constexpr char delete_group[] = "Удалить группу";
 }  // namespace button_names
 
 namespace button_datas {
 constexpr char GroupYes1[] = "Yes1";
 constexpr char GroupNo1[] = "No1";
-constexpr char GroupYes2[] = "Yes2";
-constexpr char GroupNo2[] = "No2";
-constexpr char JoinGroup[] = "JoinGroup";
+constexpr char create_group[] = "create_group";
+constexpr char edit_group[] = "edit_group";
+constexpr char delete_group[] = "delete_group";
 }  // namespace button_datas
-
-namespace urls {
-constexpr char UrlForStartGroup[] = "https://t.me/yapi_test_bot?startgroup=1";
-constexpr char UrlForChatWithBot[] = "https://t.me/yapi_test_bot?start=";
-}  // namespace urls
 
 namespace commands {
 constexpr char START[] = "start";
 constexpr char CREATEGROUP[] = "create_group";
-constexpr char EXITGROUP[] = "exit_group";
+constexpr char DELETEGROUP[] = "delete_group";
 constexpr char EDITGROUP[] = "edit_group";
 }  // namespace commands
+
+namespace keyboards {
+// create group
+TgBot::InlineKeyboardButton::Ptr create_group(new TgBot::InlineKeyboardButton{
+    button_names::create_group,
+    {},
+    button_datas::create_group
+});
+const TgBot::InlineKeyboardMarkup::Ptr create_group_keyboard(new TgBot::InlineKeyboardMarkup);
+
+// edit group
+TgBot::InlineKeyboardButton::Ptr edit_group(new TgBot::InlineKeyboardButton{
+    button_names::edit_group,
+    {},
+    button_datas::edit_group
+});
+const TgBot::InlineKeyboardMarkup::Ptr edit_group_keyboard(new TgBot::InlineKeyboardMarkup);
+// delete group
+TgBot::InlineKeyboardButton::Ptr delete_group(new TgBot::InlineKeyboardButton{
+    button_names::delete_group,
+    {},
+    button_datas::delete_group
+});
+const TgBot::InlineKeyboardMarkup::Ptr delete_group_keyboard(new TgBot::InlineKeyboardMarkup);
+
+// yes/no for delete group
+TgBot::InlineKeyboardButton::Ptr AnswerYes1(new TgBot::InlineKeyboardButton{
+    button_names::Yes,
+    {},
+    button_datas::GroupYes1
+});
+
+TgBot::InlineKeyboardButton::Ptr AnswerNo1(new TgBot::InlineKeyboardButton{
+    button_names::No,
+    {},
+    button_datas::GroupNo1
+});
+
+const TgBot::InlineKeyboardMarkup::Ptr YesNoForDeleteGroup_keyboard(new TgBot::InlineKeyboardMarkup);
+
+void init_keyboards() {
+  create_group_keyboard->inlineKeyboard = {{std::move(create_group)}}; // сюда матрицу - как клавиатура будет показываться пользователю
+  delete_group_keyboard->inlineKeyboard = {{std::move(delete_group)}};
+  edit_group_keyboard->inlineKeyboard = {{std::move(edit_group)}};
+  YesNoForDeleteGroup_keyboard->inlineKeyboard = {{std::move(AnswerYes1), std::move(AnswerNo1)}};
+}
+}
 
 namespace db_queries {
 constexpr char basic_where_from_customers[] =
