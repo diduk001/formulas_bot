@@ -18,7 +18,6 @@ int main() {
   keyboards::init_keyboards();
   db::init_conn();
 
-  
   TgBot::Bot bot(consts::TOKEN);
   bot.getEvents().onCallbackQuery([&bot, &stop_making_discipline_keyboard,
                                    &discipline_confirmation_keyboard,
