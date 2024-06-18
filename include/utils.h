@@ -8,6 +8,10 @@
 #include <string>
 #include <regex>
 
+bool isValidEmail(const std::string &email) {
+  return std::regex_match(email, regular_expressions::pattern);
+}
+
 #include "constants.h"
 
 namespace utils {
