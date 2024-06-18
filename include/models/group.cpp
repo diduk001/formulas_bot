@@ -2,11 +2,10 @@
 
 #include <iostream>
 
-Group::Group() : group_name(""), owner_id(0){};
+Group::Group() : group_name(""), owner_id(0) {}
 
 Group::Group(const Group &other)
-    : group_name(other.group_name),
-      owner_id(other.owner_id){};
+    : group_name(other.group_name), owner_id(other.owner_id) {}
 
 Group::Group(std::string name, int64_t id) {
   this->group_name = name;
@@ -15,9 +14,7 @@ Group::Group(std::string name, int64_t id) {
 
 Group::~Group() = default;
 
-void Group::set_group_name(const std::string &name) {
-  this->group_name = name;
-}
+void Group::set_group_name(const std::string &name) { this->group_name = name; }
 
 void Group::set_owner_id(int64_t id) { this->owner_id = id; }
 

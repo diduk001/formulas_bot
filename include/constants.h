@@ -45,33 +45,29 @@ constexpr char EDITGROUP[] = "edit_group";
 namespace keyboards {
 // create group
 TgBot::InlineKeyboardButton::Ptr create_group(new TgBot::InlineKeyboardButton{
-    button_names::create_group,
-    {},
-    button_datas::create_group
-});
-const TgBot::InlineKeyboardMarkup::Ptr create_group_keyboard(new TgBot::InlineKeyboardMarkup);
+    button_names::create_group, {}, button_datas::create_group});
+const TgBot::InlineKeyboardMarkup::Ptr create_group_keyboard(
+    new TgBot::InlineKeyboardMarkup);
 
 // edit group
 TgBot::InlineKeyboardButton::Ptr edit_group(new TgBot::InlineKeyboardButton{
-    button_names::edit_group,
-    {},
-    button_datas::edit_group
-});
-const TgBot::InlineKeyboardMarkup::Ptr edit_group_keyboard(new TgBot::InlineKeyboardMarkup);
+    button_names::edit_group, {}, button_datas::edit_group});
+const TgBot::InlineKeyboardMarkup::Ptr edit_group_keyboard(
+    new TgBot::InlineKeyboardMarkup);
 // delete group
 TgBot::InlineKeyboardButton::Ptr delete_group(new TgBot::InlineKeyboardButton{
-    button_names::delete_group,
-    {},
-    button_datas::delete_group
-});
-const TgBot::InlineKeyboardMarkup::Ptr delete_group_keyboard(new TgBot::InlineKeyboardMarkup);
+    button_names::delete_group, {}, button_datas::delete_group});
+const TgBot::InlineKeyboardMarkup::Ptr delete_group_keyboard(
+    new TgBot::InlineKeyboardMarkup);
 
 void init_keyboards() {
-  create_group_keyboard->inlineKeyboard = {{std::move(create_group)}}; // сюда матрицу - как клавиатура будет показываться пользователю
+  create_group_keyboard->inlineKeyboard = {
+      {std::move(create_group)}};  // сюда матрицу - как клавиатура будет
+                                   // показываться пользователю
   delete_group_keyboard->inlineKeyboard = {{std::move(delete_group)}};
   edit_group_keyboard->inlineKeyboard = {{std::move(edit_group)}};
 }
-}
+}  // namespace keyboards
 
 namespace db_queries {
 constexpr char basic_where_from_customers[] =
