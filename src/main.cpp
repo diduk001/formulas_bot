@@ -75,68 +75,75 @@ int main() {
     int64_t userId = message->chat->id;
     State state = getState(userId);
 
-    if (state == State::WAITING_FOR_NAME) {
-      if (message->text.length() <= lengths::max_discipline_name_length &&
-          message->text.length() >= lengths::min_discipline_name_length) {
-        getSubject(userId)->set_subject_name(message->text);
-        bot.getApi().sendMessage(userId, messages::discipline_name_saved,
-                                 nullptr, nullptr);
-        setState(userId, State::WAITING_FOR_PROFESSOR_NAME);
-        bot.getApi().sendMessage(userId, messages::discipline_enter_full_name,
-                                 nullptr, nullptr,
-                                 stop_making_discipline_keyboard);
-      } else {
-        bot.getApi().sendMessage(userId,
-                                 messages::discipline_wrong_name_length);
+    switch (state) {
+      case State::WAITING_FOR_NAME:
+        if (message->text.length() <= lengths::max_discipline_name_length &&
+            message->text.length() >= lengths::min_discipline_name_length) {
+          getSubject(userId)->set_subject_name(message->text);
+          bot.getApi().sendMessage(userId, messages::discipline_name_saved,
+                                   nullptr, nullptr);
+          setState(userId, State::WAITING_FOR_PROFESSOR_NAME);
+          bot.getApi().sendMessage(userId, messages::discipline_enter_full_name,
+                                   nullptr, nullptr,
+                                   stop_making_discipline_keyboard);
+        } else {
+          bot.getApi().sendMessage(userId,
+                                   messages::discipline_wrong_name_length);
+        }
+        break;
+      case State::WAITING_FOR_PROFESSOR_NAME:
+      {
+        int16_t spaceCount =
+            std::count(message->text.begin(), message->text.end(), ' ');
+        if (spaceCount >= lengths::minimal_space_count_in_name) {
+          getSubject(userId)->set_professor_name(message->text);
+          bot.getApi().sendMessage(
+              userId, messages::discipline_professor_name_saved, nullptr, nullptr,
+              stop_making_discipline_keyboard);
+          setState(userId, State::WAITING_FOR_PROFESSOR_EMAIL);
+          bot.getApi().sendMessage(userId, messages::discipline_enter_email,
+                                   nullptr, nullptr);
+        } else {
+          bot.getApi().sendMessage(userId, messages::discipline_wrong_full_name);
+        }
       }
-    } else if (state == State::WAITING_FOR_PROFESSOR_NAME) {
-      int16_t spaceCount =
-          std::count(message->text.begin(), message->text.end(), ' ');
-      if (spaceCount >= lengths::minimal_space_count_in_name) {
-        getSubject(userId)->set_professor_name(message->text);
-        bot.getApi().sendMessage(
-            userId, messages::discipline_professor_name_saved, nullptr, nullptr,
-            stop_making_discipline_keyboard);
-        setState(userId, State::WAITING_FOR_PROFESSOR_EMAIL);
-        bot.getApi().sendMessage(userId, messages::discipline_enter_email,
-                                 nullptr, nullptr);
-      } else {
-        bot.getApi().sendMessage(userId, messages::discipline_wrong_full_name);
-      }
-    } else if (state == State::WAITING_FOR_PROFESSOR_EMAIL) {
-      if (utils::isValidEmail(message->text)) {
-        getSubject(userId)->set_professor_email(message->text);
-        bot.getApi().sendMessage(userId, messages::discipline_email_saved,
-                                 nullptr, nullptr,
-                                 dont_add_description_keyboard);
-        setState(userId, State::WAITING_FOR_DESCRIPTION);
-        bot.getApi().sendMessage(userId, messages::discipline_enter_description,
-                                 nullptr, nullptr,
-                                 stop_making_discipline_keyboard);
-      } else {
-        bot.getApi().sendMessage(userId, messages::discipline_wrong_email);
-      }
-    } else if (state == State::WAITING_FOR_DESCRIPTION) {
-      if (message->text.length() < lengths::max_description_len) {
-        getSubject(userId)->set_description(message->text);
-        bot.getApi().sendMessage(userId, messages::discipline_saved, nullptr,
-                                 nullptr, discipline_confirmation_keyboard);
-        bot.getApi().sendMessage(userId, getSubject(userId)->print_all());
-        bot.getApi().sendMessage(userId, messages::discipline_saved, nullptr,
-                                 nullptr, discipline_confirmation_keyboard);
-        setState(userId, State::NONE);
-
-      } else {
-        bot.getApi().sendMessage(
-            userId, std::format(messages::discipline_wrong_describe,
-                                lengths::max_description_len));
-      }
-    } else {
-      printf("User wrote %s\n", message->text.c_str());
-      if (StringTools::startsWith(message->text, "/start") ||
-          StringTools::startsWith(message->text, "/make_discipline")) {
-        return;
-      }
+      break;
+      case State::WAITING_FOR_PROFESSOR_EMAIL:
+        if (utils::isValidEmail(message->text)) {
+          getSubject(userId)->set_professor_email(message->text);
+          bot.getApi().sendMessage(userId, messages::discipline_email_saved,
+                                   nullptr, nullptr,
+                                   stop_making_discipline_keyboard);
+          setState(userId, State::WAITING_FOR_DESCRIPTION);
+          bot.getApi().sendMessage(userId, messages::discipline_enter_description,
+                                   nullptr, nullptr,
+                                   dont_add_description_keyboard);
+        } else {
+          bot.getApi().sendMessage(userId, messages::discipline_wrong_email);
+        }
+        break;
+      case State::WAITING_FOR_DESCRIPTION:
+        if (message->text.length() < lengths::max_description_len) {
+          getSubject(userId)->set_description(message->text);
+          bot.getApi().sendMessage(userId, messages::discipline_saved, nullptr,
+                                   nullptr, discipline_confirmation_keyboard);
+          bot.getApi().sendMessage(userId, getSubject(userId)->print_all());
+          bot.getApi().sendMessage(userId, messages::discipline_saved, nullptr,
+                                   nullptr, discipline_confirmation_keyboard);
+          setState(userId, State::NONE);
+        } else {
+          bot.getApi().sendMessage(
+              userId, std::format(messages::discipline_wrong_describe,
+                                  lengths::max_description_len));
+        }
+        break;
+      default:
+        printf("User wrote %s\n", message->text.c_str());
+        if (StringTools::startsWith(message->text, "/start") ||
+            StringTools::startsWith(message->text, "/make_discipline")) {
+          return;
+        }
+        break;
     }
   });
 
