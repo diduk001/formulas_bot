@@ -6,6 +6,7 @@
 #define INCLUDE_UTILS_H_
 
 #include <string>
+#include <regex>
 
 #include "constants.h"
 
