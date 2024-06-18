@@ -5,35 +5,18 @@
 #include "../include/constants.h"
 #include "../include/db_utils.h"
 #include "../include/models/group.h"
+#include "../include/state_utils.h"
 
-enum class Group_State {
-  NONE,
-  WAITING_FOR_GROUP_NAME,
-  WAITING_FOR_NEW_GROUP_NAME
-};
-
-std::unordered_map<int64_t, Group_State> userStates;
 std::unordered_map<int64_t, Group> userGroup;
-
-void setState(int64_t userId, Group_State state) { userStates[userId] = state; }
-
-Group_State getState(int64_t userId) {
-  if (userStates.find(userId) == userStates.end()) {
-    return Group_State::NONE;
-  }
-  return userStates[userId];
-}
 
 int main() {
   db::init_conn();
 
   TgBot::Bot bot(consts::TOKEN);
-  bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
-    bot.getApi().sendMessage(message->chat->id, messages::HI);
-  });
+  
   bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
     printf("User wrote %s\n", message->text.c_str());
-    if (StringTools::startsWith(message->text, "/start")) {
+    if (StringTools::startsWith(message->text, '/'+commands::START)) {
       return;
     }
     const auto query_result = db::basic_where(message->text);
@@ -42,10 +25,9 @@ int main() {
     for (const std::string& res : query_result) {
       bot.getApi().sendMessage(message->chat->id, res);
     }
-    return;
   });
 
-  // Stepan's peace
+  // Stepan's piece
 
   // КЛАВИАТУРА для ответа да/нет 1
   TgBot::InlineKeyboardMarkup::Ptr keyboardYesNo1(
@@ -60,7 +42,7 @@ int main() {
   AnswerNo1->text = button_names::No;
   AnswerNo1->callbackData = button_datas::GroupNo1;
   buttons1.emplace_back(AnswerNo1);
-  keyboardYesNo1->inlineKeyboard.emplace_back(buttons1);
+  keyboardYesNo1->inlineKeyboard.push_back(buttons1);
 
   // КЛАВИАТУРА для ответа да/нет 2
   TgBot::InlineKeyboardMarkup::Ptr keyboardYesNo2(
@@ -74,7 +56,7 @@ int main() {
   AnswerNo2->text = button_names::No;
   AnswerNo2->callbackData = button_datas::GroupNo2;
   buttons2.emplace_back(AnswerNo2);
-  keyboardYesNo2->inlineKeyboard.emplace_back(buttons2);
+  keyboardYesNo2->inlineKeyboard.push_back(buttons2);
 
   bot.getEvents().onCallbackQuery([&bot, &keyboardYesNo1, &keyboardYesNo2](
                                       TgBot::CallbackQuery::Ptr query) {
@@ -99,7 +81,7 @@ int main() {
     }
   });
 
-  bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
+  bot.getEvents().onCommand(commands::START, [&bot](TgBot::Message::Ptr message) {
     if (message->chat->type == TgBot::Chat::Type::Group) {
       bot.getApi().sendMessage(message->chat->id, messages::JoinChat);
       int64_t tg_id = message->chat->id;
@@ -114,14 +96,16 @@ int main() {
       JoinGroup->callbackData = button_datas::JoinGroup;
       JoinGroup->url = urls::UrlForChatWithBot + std::to_string(tg_id);
       buttons3.emplace_back(JoinGroup);
-      keyboardJoin->inlineKeyboard.emplace_back(buttons3);
+      keyboardJoin->inlineKeyboard.push_back(buttons3);
       bot.getApi().sendMessage(message->chat->id, messages::ButtonToJoinGroup,
                                NULL, 0, keyboardJoin);
+    } else if (message->chat->type == TgBot::Chat::Type::Private) {
+      bot.getApi().sendMessage(message->chat->id, messages::HI);
     }
   });
 
   bot.getEvents().onCommand(
-      "create_group", [&bot](TgBot::Message::Ptr message) {
+      commands::CREATEGROUP, [&bot](TgBot::Message::Ptr message) {
         int64_t userId = message->chat->id;
         userGroup[userId].set_owner_id(userId);
         bot.getApi().sendMessage(userId, messages::PrintGroupName);
@@ -129,7 +113,7 @@ int main() {
       });
 
   bot.getEvents().onCommand(
-      "exit_group", [&bot, &keyboardYesNo2](TgBot::Message::Ptr message) {
+      commands::EXITGROUP, [&bot, &keyboardYesNo2](TgBot::Message::Ptr message) {
         int64_t userId = message->chat->id;
         int64_t ownerId = -1;
         // берем ownerId из базы данных, и userId=message->chat->id
@@ -147,7 +131,7 @@ int main() {
         }
       });
 
-  bot.getEvents().onCommand("edit_group", [&bot](TgBot::Message::Ptr message) {
+  bot.getEvents().onCommand(commands::EDITGROUP, [&bot](TgBot::Message::Ptr message) {
     int64_t userId = message->chat->id;
     int64_t ownerId = -1;
     // Мы также сравниваем ownerId из базы данных и userId, если они равны, то
@@ -184,10 +168,10 @@ int main() {
           // вернуться в меню группы
         } else {
           printf("User wrote %s\n", message->text.c_str());
-          if (StringTools::startsWith(message->text, "/start") ||
-              StringTools::startsWith(message->text, "/create_group") ||
-              StringTools::startsWith(message->text, "/exit_group") ||
-              StringTools::startsWith(message->text, "/edit_group")) {
+          if (StringTools::startsWith(message->text, '/'+commands::START) ||
+              StringTools::startsWith(message->text, '/'+commands::CREATEGROUP) ||
+              StringTools::startsWith(message->text, '/'+commands::EXITGROUP) ||
+              StringTools::startsWith(message->text, '/'+commands::EDITGROUP)) {
             return;
           }
         }
