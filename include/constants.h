@@ -24,16 +24,12 @@ constexpr char SavedNewNameGroup[] = "Новое имя группы сохра�
 }  // namespace messages
 
 namespace button_names {
-constexpr char Yes[] = "Да";
-constexpr char No[] = "Нет";
 constexpr char create_group[] = "Создать группу";
 constexpr char edit_group[] = "Изменить имя группы";
 constexpr char delete_group[] = "Удалить группу";
 }  // namespace button_names
 
 namespace button_datas {
-constexpr char GroupYes1[] = "Yes1";
-constexpr char GroupNo1[] = "No1";
 constexpr char create_group[] = "create_group";
 constexpr char edit_group[] = "edit_group";
 constexpr char delete_group[] = "delete_group";
@@ -70,26 +66,10 @@ TgBot::InlineKeyboardButton::Ptr delete_group(new TgBot::InlineKeyboardButton{
 });
 const TgBot::InlineKeyboardMarkup::Ptr delete_group_keyboard(new TgBot::InlineKeyboardMarkup);
 
-// yes/no for delete group
-TgBot::InlineKeyboardButton::Ptr AnswerYes1(new TgBot::InlineKeyboardButton{
-    button_names::Yes,
-    {},
-    button_datas::GroupYes1
-});
-
-TgBot::InlineKeyboardButton::Ptr AnswerNo1(new TgBot::InlineKeyboardButton{
-    button_names::No,
-    {},
-    button_datas::GroupNo1
-});
-
-const TgBot::InlineKeyboardMarkup::Ptr YesNoForDeleteGroup_keyboard(new TgBot::InlineKeyboardMarkup);
-
 void init_keyboards() {
   create_group_keyboard->inlineKeyboard = {{std::move(create_group)}}; // сюда матрицу - как клавиатура будет показываться пользователю
   delete_group_keyboard->inlineKeyboard = {{std::move(delete_group)}};
   edit_group_keyboard->inlineKeyboard = {{std::move(edit_group)}};
-  YesNoForDeleteGroup_keyboard->inlineKeyboard = {{std::move(AnswerYes1), std::move(AnswerNo1)}};
 }
 }
 

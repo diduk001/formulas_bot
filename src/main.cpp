@@ -27,33 +27,26 @@ int main() {
     for (const std::string& res : query_result) {
       bot.getApi().sendMessage(message->chat->id, res);
     }
+    return;
   });*/
 
   // Stepan's piece
 
-  bot.getEvents().onCallbackQuery([&bot, YesNoForDeleteGroup_keyboard, create_group_keyboard, delete_group_keyboard, edit_group_keyboard](
+  bot.getEvents().onCallbackQuery([&bot, create_group_keyboard, delete_group_keyboard, edit_group_keyboard](
                                       TgBot::CallbackQuery::Ptr query) {
-    if (query->data == button_datas::GroupYes1) {
-      // удаление группы из базы данных
-      bot.getApi().sendMessage(query->message->chat->id,
-                               messages::DeletedGroup);
-      // вернуться в меню
-    } else if (query->data == button_datas::GroupNo1) {
-      // тут должно возвращаться в изначальное меню с кнопочками групп
-      // вернуться в меню
-    } else if (query->data == button_datas::create_group) {
+    if (query->data == button_datas::create_group) {
       int64_t userId = query->message->chat->id;
       userGroup[userId].set_owner_id(userId);
       bot.getApi().sendMessage(userId, messages::PrintGroupName);
       setState(userId, Group_State::WAITING_FOR_GROUP_NAME);
     } else if (query->data == button_datas::delete_group) {
       int64_t userId = query->message->chat->id;
-      int64_t ownerId = -1;
       // удаление группы из базы данных
       bot.getApi().sendMessage(userId, messages::DeletedGroup);
       // вернуться в меню группы
     } else if (query->data == button_datas::edit_group) {
       int64_t userId = query->message->chat->id;
+      //изменение в базе данных имени группы
       bot.getApi().sendMessage(userId, messages::PrintNewGroupName);
       setState(userId, Group_State::WAITING_FOR_NEW_GROUP_NAME);
       // вернуться в меню группы
