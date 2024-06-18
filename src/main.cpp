@@ -98,13 +98,15 @@ int main() {
         if (spaceCount >= lengths::minimal_space_count_in_name) {
           getSubject(userId)->set_professor_name(message->text);
           bot.getApi().sendMessage(
-              userId, messages::discipline_professor_name_saved, nullptr, nullptr,
+              userId, messages::discipline_professor_name_saved,
+              nullptr, nullptr,
               stop_making_discipline_keyboard);
           setState(userId, State::WAITING_FOR_PROFESSOR_EMAIL);
           bot.getApi().sendMessage(userId, messages::discipline_enter_email,
                                    nullptr, nullptr);
         } else {
-          bot.getApi().sendMessage(userId, messages::discipline_wrong_full_name);
+          bot.getApi().sendMessage(userId,
+                                   messages::discipline_wrong_full_name);
         }
       }
       break;
@@ -115,7 +117,8 @@ int main() {
                                    nullptr, nullptr,
                                    stop_making_discipline_keyboard);
           setState(userId, State::WAITING_FOR_DESCRIPTION);
-          bot.getApi().sendMessage(userId, messages::discipline_enter_description,
+          bot.getApi().sendMessage(userId,
+                                   messages::discipline_enter_description,
                                    nullptr, nullptr,
                                    dont_add_description_keyboard);
         } else {
