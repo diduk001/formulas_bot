@@ -1,8 +1,8 @@
 
 #include <iostream>
 #include <string>
-#ifndef INCLUDE_MODELS_GROUP_H_
-#define INCLUDE_MODELS_GROUP_H_
+#ifndef INCLUDE_GROUP_H_
+#define INCLUDE_GROUP_H_
 
 class Group {
   std::string group_name;
@@ -30,4 +30,4 @@ class Group {
   int64_t get_owner_id() const { return this->owner_id; }
 };
 
-#endif  // INCLUDE_MODELS_GROUP_H_
+#endif  // INCLUDE_GROUP_H_
