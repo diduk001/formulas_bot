@@ -4,19 +4,16 @@
 
 #include "Subject.h"
 
+Subject::Subject() : subject_id(0) {}
 
-Subject::Subject() :
-                     professor_name(""), professor_email(""),
-                     description(""), subject_id(0), subject_name("")  {}
-
-Subject::~Subject(){};
+Subject::~Subject() = default;
 
 void Subject::set_professor_name(std::string name) {
   this->professor_name = name;
 };
 
 void Subject::set_professor_email(std::string email) {
-  this->professor_email = email;
+  this->professor_email = std::move(email);
 };
 
 void Subject::set_description(std::string desc) {
