@@ -1,14 +1,18 @@
 #include <tgbot/tgbot.h>
 
-#include <cstdio>
 #include <format>
+
+#include <cstdio>
 
 #include "../include/constants.h"
 #include "../include/db_utils.h"
 #include "../include/state.h"
 #include "../include/utils.h"
 
-using namespace keyboards;
+using keyboards::making_discipline_keyboard;
+using keyboards::stop_making_discipline_keyboard;
+using keyboards::discipline_confirmation_keyboard;
+using keyboards::dont_add_description_keyboard;
 
 int main() {
   keyboards::init_keyboards();
@@ -86,7 +90,7 @@ int main() {
                                  messages::discipline_wrong_name_length);
       }
     } else if (state == State::WAITING_FOR_PROFESSOR_NAME) {
-      unsigned short spaceCount =
+      int16_t spaceCount =
           std::count(message->text.begin(), message->text.end(), ' ');
       if (spaceCount >= lengths::minimal_space_count_in_name) {
         getSubject(userId)->set_professor_name(message->text);

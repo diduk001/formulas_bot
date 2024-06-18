@@ -2,8 +2,9 @@
 // Created by 4s4r on 04.06.2024.
 //
 #include <iostream>
-#ifndef TELEGRAMBOT_SUBJECT_H
-#define TELEGRAMBOT_SUBJECT_H
+#include <string>
+#ifndef INCLUDE_SUBJECT_H_
+#define INCLUDE_SUBJECT_H_
 
 class Subject {
   std::string professor_name;
@@ -40,4 +41,4 @@ class Subject {
   std::string print_all();
 };
 
-#endif  // TELEGRAMBOT_SUBJECT_H
+#endif  // INCLUDE_SUBJECT_H_

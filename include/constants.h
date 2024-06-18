@@ -6,7 +6,7 @@
 #define INCLUDE_CONSTANTS_H_
 
 #include <tgbot/tgbot.h>
-
+#include <utility>
 #include <regex>
 #include <string>
 
@@ -39,8 +39,9 @@ constexpr char discipline_email_saved[] = "Электронная почта с�
 constexpr char discipline_saved[] = "Проверьте правильность данных:";
 // wrong
 constexpr char discipline_wrong_name_length[] =
-    "Неправильная длина дисциплины\nДлина должна быть более: ";  // TODO:
-                                                                 // даделатб
+    "Неправильная длина дисциплины\nДлина должна быть более:";
+// TODO(diduk001):
+// даделатб
 constexpr char discipline_wrong_full_name[] = "Неправильный формат ввода ФИ(О)";
 constexpr char discipline_wrong_email[] =
     "Проверьте правильность ввода почты, впишите ее еще раз";

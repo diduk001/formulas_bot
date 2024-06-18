@@ -2,8 +2,8 @@
 // Created by f4s4r on 6/18/24.
 //
 
-#ifndef FORMULAS_TMP_STATE_H
-#define FORMULAS_TMP_STATE_H
+#ifndef INCLUDE_STATE_H_
+#define INCLUDE_STATE_H_
 
 #include <cstdint>
 #include <iostream>
@@ -45,4 +45,4 @@ void eraseStateAndSubject(int64_t userId) {
   }
 }
 
-#endif  // FORMULAS_TMP_STATE_H
+#endif  // INCLUDE_STATE_H_
