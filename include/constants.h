@@ -22,6 +22,7 @@ constexpr char PrintGroupName[] = "Введите название группы:
 constexpr char PrintNewGroupName[] = "Введите новое название группы:";
 constexpr char SavedNameGroup[] = "Имя группы сохранено.";
 constexpr char SavedNewNameGroup[] = "Новое имя группы сохранено.";
+constexpr char MENU[] = "Меню.";
 }  // namespace messages
 
 namespace button_names {

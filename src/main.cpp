@@ -9,16 +9,12 @@
 using keyboards::create_group_keyboard;
 using keyboards::delete_group_keyboard;
 using keyboards::edit_group_keyboard;
-using keyboards::init_keyboards;
-
-std::unordered_map<int64_t, Group> userGroup;
 
 int main() {
+  keyboards::init_keyboards();
   db::init_conn();
 
   TgBot::Bot bot(consts::TOKEN);
-
-  init_keyboards();
 
   // Stepan's piece
 
@@ -27,7 +23,7 @@ int main() {
        edit_group_keyboard](TgBot::CallbackQuery::Ptr query) {
         if (query->data == button_datas::create_group) {
           int64_t userId = query->message->chat->id;
-          userGroup[userId].set_owner_id(userId);
+          getGroup(userId)->set_owner_id(userId);
           bot.getApi().sendMessage(userId, messages::PrintGroupName);
           setState(userId, Group_State::WAITING_FOR_GROUP_NAME);
         } else if (query->data == button_datas::delete_group) {
@@ -51,22 +47,22 @@ int main() {
   bot.getEvents().onCommand(
       commands::CREATEGROUP,
       [&bot, create_group_keyboard](TgBot::Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Меню.", NULL, 0,
-                                 create_group_keyboard);
+        bot.getApi().sendMessage(message->chat->id, messages::MENU, nullptr,
+                                 nullptr, create_group_keyboard);
       });
 
   bot.getEvents().onCommand(
       commands::DELETEGROUP,
       [&bot, delete_group_keyboard](TgBot::Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Меню", NULL, 0,
-                                 delete_group_keyboard);
+        bot.getApi().sendMessage(message->chat->id, messages::MENU, nullptr,
+                                 nullptr, delete_group_keyboard);
       });
 
   bot.getEvents().onCommand(
       commands::EDITGROUP,
       [&bot, edit_group_keyboard](TgBot::Message::Ptr message) {
-        bot.getApi().sendMessage(message->chat->id, "Меню.", NULL, 0,
-                                 edit_group_keyboard);
+        bot.getApi().sendMessage(message->chat->id, messages::MENU, nullptr,
+                                 nullptr, edit_group_keyboard);
       });
 
   bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
@@ -76,25 +72,19 @@ int main() {
     if (state == Group_State::WAITING_FOR_GROUP_NAME) {
       // запись названия в базу данных
       printf("Name of group: %s\n", message->text.c_str());
-      userGroup[userId].set_group_name(message->text);
+      getGroup(userId)->set_group_name(message->text);
       bot.getApi().sendMessage(userId, messages::SavedNameGroup);
       bot.getApi().sendMessage(userId, messages::CreatedGroup);
       setState(userId, Group_State::NONE);
       // вернуться в меню группы
     } else if (state == Group_State::WAITING_FOR_NEW_GROUP_NAME) {
       // вводим значит new name и изменяем в базе данных
-      userGroup[userId].set_group_name(message->text);
+      getGroup(userId)->set_group_name(message->text);
       bot.getApi().sendMessage(userId, messages::SavedNewNameGroup);
       setState(userId, Group_State::NONE);
       // вернуться в меню группы
     } else {
       printf("User wrote %s\n", message->text.c_str());
-      if (StringTools::startsWith(message->text, '/' + commands::START) ||
-          StringTools::startsWith(message->text, '/' + commands::CREATEGROUP) ||
-          StringTools::startsWith(message->text, '/' + commands::DELETEGROUP) ||
-          StringTools::startsWith(message->text, '/' + commands::EDITGROUP)) {
-        return;
-      }
     }
   });
 
