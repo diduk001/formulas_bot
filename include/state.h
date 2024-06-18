@@ -6,9 +6,10 @@
 #define FORMULAS_TMP_STATE_H
 
 #include <cstdint>
-#include <unordered_map>
-#include "Subject.h"
 #include <iostream>
+#include <unordered_map>
+
+#include "Subject.h"
 
 enum class State {
   NONE,
@@ -21,9 +22,7 @@ enum class State {
 std::unordered_map<int64_t, State> userStates;
 std::unordered_map<int64_t, Subject*> userSubject;
 
-void setState(int64_t userId, State state) {
-  userStates[userId] = state;
-}
+void setState(int64_t userId, State state) { userStates[userId] = state; }
 
 State getState(int64_t userId) {
   if (userStates.find(userId) == userStates.end()) {
@@ -45,6 +44,5 @@ void eraseStateAndSubject(int64_t userId) {
     userSubject.erase(userId);
   }
 }
-
 
 #endif  // FORMULAS_TMP_STATE_H

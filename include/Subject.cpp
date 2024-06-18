@@ -4,12 +4,14 @@
 
 #include "Subject.h"
 
+#include <utility>
+
 Subject::Subject() : subject_id(0) {}
 
 Subject::~Subject() = default;
 
 void Subject::set_professor_name(std::string name) {
-  this->professor_name = name;
+  this->professor_name = std::move(name);
 };
 
 void Subject::set_professor_email(std::string email) {
@@ -17,37 +19,24 @@ void Subject::set_professor_email(std::string email) {
 };
 
 void Subject::set_description(std::string desc) {
-  this->description = desc;
+  this->description = std::move(desc);
 };
 
-void Subject::set_subject_id(size_t id) {
-  this->subject_id = id;
-};
+void Subject::set_subject_id(size_t id) { this->subject_id = id; };
 
 void Subject::set_subject_name(std::string name) {
-  this->subject_name = name;
+  this->subject_name = std::move(name);
 };
 
+std::string Subject::get_professor_name() { return this->professor_name; };
 
-std::string Subject::get_professor_name() {
-  return this->professor_name;
-};
+std::string Subject::get_professor_email() { return this->professor_email; };
 
-std::string Subject::get_professor_email() {
-  return this->professor_email;
-};
+std::string Subject::get_description() { return this->description; };
 
-std::string Subject::get_description() {
-  return this->description;
-};
+size_t Subject::get_subject_id() const { return this->subject_id; };
 
-size_t Subject::get_subject_id() {
-  return this->subject_id;
-};
-
-std::string Subject::get_subject_name() {
-  return this->subject_name;
-};
+std::string Subject::get_subject_name() { return this->subject_name; };
 
 std::string Subject::print_all() {
   std::string all_info;

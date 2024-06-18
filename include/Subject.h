@@ -5,7 +5,6 @@
 #ifndef TELEGRAMBOT_SUBJECT_H
 #define TELEGRAMBOT_SUBJECT_H
 
-
 class Subject {
   std::string professor_name;
   std::string professor_email;
@@ -28,20 +27,17 @@ class Subject {
 
   void set_subject_name(std::string name);
 
-
   std::string get_professor_name();
 
   std::string get_professor_email();
 
   std::string get_description();
 
-  size_t get_subject_id();
+  size_t get_subject_id() const;
 
   std::string get_subject_name();
 
   std::string print_all();
-
 };
 
-
-#endif //TELEGRAMBOT_SUBJECT_H
+#endif  // TELEGRAMBOT_SUBJECT_H

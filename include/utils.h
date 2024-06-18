@@ -5,13 +5,12 @@
 #ifndef FORMULAS_TMP_UTILS_H
 #define FORMULAS_TMP_UTILS_H
 
-#include "constants.h"
 #include <string>
 
+#include "constants.h"
+
 namespace utils {
-bool isValidEmail(const std::string &email) {
-  return true;
-}
-} // namespace utils
+bool isValidEmail(const std::string &email) { return true; }
+}  // namespace utils
 
 #endif  // FORMULAS_TMP_UTILS_H
