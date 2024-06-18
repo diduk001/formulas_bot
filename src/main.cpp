@@ -4,7 +4,7 @@
 
 #include "../include/constants.h"
 #include "../include/db_utils.h"
-#include "../include/models/group.h"
+#include "../include/group.h"
 #include "../include/state_utils.h"
 using keyboards::create_group_keyboard;
 using keyboards::delete_group_keyboard;
@@ -69,22 +69,26 @@ int main() {
     int64_t userId = message->chat->id;
     Group_State state = getState(userId);
 
-    if (state == Group_State::WAITING_FOR_GROUP_NAME) {
-      // запись названия в базу данных
-      printf("Name of group: %s\n", message->text.c_str());
-      getGroup(userId)->set_group_name(message->text);
-      bot.getApi().sendMessage(userId, messages::SavedNameGroup);
-      bot.getApi().sendMessage(userId, messages::CreatedGroup);
-      setState(userId, Group_State::NONE);
-      // вернуться в меню группы
-    } else if (state == Group_State::WAITING_FOR_NEW_GROUP_NAME) {
-      // вводим значит new name и изменяем в базе данных
-      getGroup(userId)->set_group_name(message->text);
-      bot.getApi().sendMessage(userId, messages::SavedNewNameGroup);
-      setState(userId, Group_State::NONE);
-      // вернуться в меню группы
-    } else {
-      printf("User wrote %s\n", message->text.c_str());
+    switch (state) {
+      case Group_State::WAITING_FOR_GROUP_NAME:
+        // запись названия в базу данных
+        printf("Name of group: %s\n", message->text.c_str());
+        getGroup(userId)->set_group_name(message->text);
+        bot.getApi().sendMessage(userId, messages::SavedNameGroup);
+        bot.getApi().sendMessage(userId, messages::CreatedGroup);
+        setState(userId, Group_State::NONE);
+        // вернуться в меню группы
+        break;
+      case Group_State::WAITING_FOR_NEW_GROUP_NAME:
+        // вводим значит new name и изменяем в базе данных
+        getGroup(userId)->set_group_name(message->text);
+        bot.getApi().sendMessage(userId, messages::SavedNewNameGroup);
+        setState(userId, Group_State::NONE);
+        // вернуться в меню группы
+        break;
+      default:
+        printf("User wrote %s\n", message->text.c_str());
+        break;
     }
   });
 

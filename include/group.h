@@ -9,7 +9,7 @@ class Group {
   int64_t owner_id;
 
  public:
-  Group() : group_name(""), owner_id(0) {}
+  Group() : owner_id(0) {}
 
   Group(const Group &other)
     : group_name(other.group_name), owner_id(other.owner_id) {}

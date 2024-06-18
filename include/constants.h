@@ -63,9 +63,7 @@ const TgBot::InlineKeyboardMarkup::Ptr delete_group_keyboard(
     new TgBot::InlineKeyboardMarkup);
 
 void init_keyboards() {
-  create_group_keyboard->inlineKeyboard = {
-      {std::move(create_group)}};  // сюда матрицу - как клавиатура будет
-                                   // показываться пользователю
+  create_group_keyboard->inlineKeyboard = {{std::move(create_group)}};
   delete_group_keyboard->inlineKeyboard = {{std::move(delete_group)}};
   edit_group_keyboard->inlineKeyboard = {{std::move(edit_group)}};
 }
