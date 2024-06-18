@@ -11,9 +11,13 @@ class Group {
  public:
   Group() : group_name(""), owner_id(0) {}
 
-  Group(const Group &other);
+  Group(const Group &other)
+    : group_name(other.group_name), owner_id(other.owner_id) {}
 
-  Group(std::string name, int64_t id);
+  Group(std::string name, int64_t id) {
+    this->group_name = name;
+    this->owner_id = id;
+  }
 
   ~Group() = default;
 
