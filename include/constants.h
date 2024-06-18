@@ -52,6 +52,13 @@ constexpr char UrlForStartGroup[] = "https://t.me/yapi_test_bot?startgroup=1";
 constexpr char UrlForChatWithBot[] = "https://t.me/yapi_test_bot?start=";
 }  // namespace urls
 
+namespace commands {
+constexpr char START[] = "start";
+constexpr char CREATEGROUP[] = "create_group";
+constexpr char EXITGROUP[] = "exit_group";
+constexpr char EDITGROUP[] = "edit_group";
+}  // namespace commands
+
 namespace db_queries {
 constexpr char basic_where_from_customers[] =
     "SELECT FirstName FROM customers WHERE Country=?";
