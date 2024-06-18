@@ -12,7 +12,7 @@
 
 namespace consts {
 // TODO(diduk001): проверять регексом в compile-time
-constexpr char TOKEN[] = "...";
+constexpr char TOKEN[] = "7041771878:AAGNm1BSBS0g1iedFp6h-7V9d9coHhqvux0";
 constexpr char DB_NAME[] = "../chinook.db";
 }  // namespace consts
 namespace messages {
