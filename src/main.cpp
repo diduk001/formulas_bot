@@ -125,8 +125,6 @@ int main() {
       case State::WAITING_FOR_DESCRIPTION:
         if (message->text.length() < lengths::max_description_len) {
           getSubject(userId)->set_description(message->text);
-          bot.getApi().sendMessage(userId, messages::discipline_saved, nullptr,
-                                   nullptr, discipline_confirmation_keyboard);
           bot.getApi().sendMessage(userId, getSubject(userId)->print_all());
           bot.getApi().sendMessage(userId, messages::discipline_saved, nullptr,
                                    nullptr, discipline_confirmation_keyboard);

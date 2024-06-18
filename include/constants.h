@@ -36,7 +36,7 @@ constexpr char discipline_professor_name_saved[] =
     "Имя преподавателя сохранено";
 constexpr char discipline_name_saved[] = "Название дисциплины сохранено";
 constexpr char discipline_email_saved[] = "Электронная почта сохранена";
-constexpr char discipline_saved[] = "Проверьте правильность данных:";
+constexpr char discipline_saved[] = "Данные записаны правильно?";
 // wrong
 constexpr char discipline_wrong_name_length[] =
     "Неправильная длина дисциплины\nДлина должна быть более:";

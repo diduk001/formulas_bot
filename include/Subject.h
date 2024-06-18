@@ -28,17 +28,17 @@ class Subject {
 
   void set_subject_name(std::string name);
 
-  std::string get_professor_name();
+  std::string get_professor_name() const;
 
-  std::string get_professor_email();
+  std::string get_professor_email() const;
 
-  std::string get_description();
+  std::string get_description() const;
 
   size_t get_subject_id() const;
 
-  std::string get_subject_name();
+  std::string get_subject_name() const;
 
-  std::string print_all();
+  std::string print_all() const;
 };
 
 #endif  // INCLUDE_SUBJECT_H_

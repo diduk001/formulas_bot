@@ -29,17 +29,17 @@ void Subject::set_subject_name(std::string name) {
   this->subject_name = std::move(name);
 }
 
-std::string Subject::get_professor_name() { return this->professor_name; }
+std::string Subject::get_professor_name() const { return this->professor_name; }
 
-std::string Subject::get_professor_email() { return this->professor_email; }
+std::string Subject::get_professor_email() const { return this->professor_email; }
 
-std::string Subject::get_description() { return this->description; }
+std::string Subject::get_description() const { return this->description; }
 
 size_t Subject::get_subject_id() const { return this->subject_id; }
 
-std::string Subject::get_subject_name() { return this->subject_name; }
+std::string Subject::get_subject_name() const { return this->subject_name; }
 
-std::string Subject::print_all() {
+std::string Subject::print_all() const {
   std::string all_info;
   all_info = "Название дисциплины: " + this->get_subject_name() + '\n';
   all_info += "ФИ(О) профессора: " + this->get_professor_name() + '\n';
