@@ -9,7 +9,7 @@
 
 namespace consts {
 // TODO(diduk001): проверять регексом в compile-time
-constexpr char TOKEN[] = "7041771878:AAHV0wS6Xkc_bn9RFbL9hn2RuQB1yzcaUiQ";
+constexpr char TOKEN[] = "...";
 constexpr char DB_NAME[] = "../chinook.db";
 }  // namespace consts
 
