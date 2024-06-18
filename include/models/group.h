@@ -1,33 +1,34 @@
 
 #include <iostream>
 #include <string>
-#ifndef INCLUDE_GROUP_H_
-#define INCLUDE_GROUP_H_
+#ifndef INCLUDE_MODELS_GROUP_H_
+#define INCLUDE_MODELS_GROUP_H_
 
 class Group {
-    std::string group_name;
-    int64_t tg_id;
-    int64_t owner_id;
-    public:
-        Group();
+  std::string group_name;
+  int64_t tg_id;
+  int64_t owner_id;
 
-        Group(const Group &other);
+ public:
+  Group();
 
-        Group(std::string name, int64_t id);
+  Group(const Group &other);
 
-       ~Group();
+  Group(std::string name, int64_t id);
 
-        void set_group_name(const std::string &name);
+  ~Group();
 
-        void set_tg_id(int64_t id);
+  void set_group_name(const std::string &name);
 
-        void set_owner_id(int64_t id);
+  void set_tg_id(int64_t id);
 
-        std::string get_group_name() const;
+  void set_owner_id(int64_t id);
 
-        int64_t get_tg_id() const;
-        
-        int64_t get_owner_id() const;
+  std::string get_group_name() const;
+
+  int64_t get_tg_id() const;
+
+  int64_t get_owner_id() const;
 };
 
-#endif //INCLUDE_GROUP_H_
+#endif  // INCLUDE_MODELS_GROUP_H_
