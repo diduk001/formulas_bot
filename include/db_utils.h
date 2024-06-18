@@ -1,5 +1,5 @@
-#ifndef INCLUDE_DB_UTILS_H_
-#define INCLUDE_DB_UTILS_H_
+#ifndef FORMULAS_BOT_INCLUDE_DB_UTILS_H_
+#define FORMULAS_BOT_INCLUDE_DB_UTILS_H_
 
 #include <sqlite3.h>
 
@@ -46,4 +46,4 @@ std::vector<std::string> basic_where(const std::string &clause_value) {
 void close_conn() { sqlite3_close(db_conn); }
 }  // namespace db
 
-#endif  // INCLUDE_DB_UTILS_H_
+#endif  // FORMULAS_BOT_INCLUDE_DB_UTILS_H_

@@ -2,10 +2,11 @@
 // Created by Stepan Didurenko on 05.06.2024.
 //
 
-#ifndef INCLUDE_CONSTANTS_H_
-#define INCLUDE_CONSTANTS_H_
+#ifndef FORMULAS_BOT_INCLUDE_CONSTANTS_H_
+#define FORMULAS_BOT_INCLUDE_CONSTANTS_H_
 
 #include <string>
+#include <utility>
 
 namespace consts {
 // TODO(diduk001): проверять регексом в compile-time
@@ -74,4 +75,4 @@ constexpr char basic_where_from_customers[] =
     "SELECT FirstName FROM customers WHERE Country=?";
 }
 
-#endif  // INCLUDE_CONSTANTS_H_
+#endif  // FORMULAS_BOT_INCLUDE_CONSTANTS_H_

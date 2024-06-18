@@ -1,8 +1,8 @@
 #include <iostream>
 #include <unordered_map>
 
-#ifndef INCLUDE_STATE_UTILS_H_
-#define INCLUDE_STATE_UTILS_H_
+#ifndef FORMULAS_BOT_INCLUDE_STATE_UTILS_H_
+#define FORMULAS_BOT_INCLUDE_STATE_UTILS_H_
 
 enum class Group_State {
   NONE,
@@ -21,4 +21,4 @@ Group_State getState(int64_t userId) {
   return userStates[userId];
 }
 
-#endif INCLUDE_STATE_UTILS_H_
+#endif  // FORMULAS_BOT_INCLUDE_STATE_UTILS_H_

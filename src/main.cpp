@@ -6,7 +6,11 @@
 #include "../include/db_utils.h"
 #include "../include/models/group.h"
 #include "../include/state_utils.h"
-using namespace keyboards;
+using keyboards::create_group_keyboard;
+using keyboards::delete_group_keyboard;
+using keyboards::edit_group_keyboard;
+using keyboards::init_keyboards;
+
 std::unordered_map<int64_t, Group> userGroup;
 
 int main() {
@@ -15,20 +19,6 @@ int main() {
   TgBot::Bot bot(consts::TOKEN);
 
   init_keyboards();
-
-  /*bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
-    printf("User wrote %s\n", message->text.c_str());
-    if (StringTools::startsWith(message->text, '/'+commands::START)) {
-      return;
-    }
-    const auto query_result = db::basic_where(message->text);
-    bot.getApi().sendMessage(message->chat->id,
-                             std::to_string(query_result.size()));
-    for (const std::string& res : query_result) {
-      bot.getApi().sendMessage(message->chat->id, res);
-    }
-    return;
-  });*/
 
   // Stepan's piece
 
