@@ -38,7 +38,7 @@ int main() {
     int64_t userId = query->message->chat->id;
     if (query->data == button_data::createGroup) {
       getGroup(userId)->set_owner_id(userId);
-      bot.getApi().sendMessage(userId, messages::enterGroupName);
+      bot.getApi().sendMessage(userId, messages::enterNewGroupName);
       setGroupState(userId, GroupState::WAITING_FOR_GROUP_NAME);
     } else if (query->data == button_data::deleteGroup) {
       // удаление группы из базы данных

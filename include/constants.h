@@ -45,10 +45,13 @@ constexpr char disciplineWrongEmail[] =
 constexpr char disciplineWrongDescription[] =
     "Максимальная длина для описания - {}";
 
-constexpr char welcomeMessage[] = "Привет! Добро пожаловать в бота Formulin. Здесь ты можешь сохранить формулу по дисциплине и рассчитать оценку за предмет.\nДля начала, выбери свою группу и добавь дисциплину";
+constexpr char welcomeMessage[] =
+    "Привет! Добро пожаловать в бота Formulin. Здесь ты можешь сохранить "
+    "формулу по дисциплине и рассчитать оценку за предмет.\nДля начала, выбери "
+    "свою группу и добавь дисциплину";
 constexpr char createdGroup[] = "✨Группа создана!✨";
-constexpr char deletedGroup[] = "Группа удалена \uD83D\uDDD1";
-constexpr char enterGroupName[] = "Введите название группы:";
+constexpr char deletedGroup[] = "Группа удалена";
+    constexpr char enterGroupName[] = "Введите название группы:";
 constexpr char enterNewGroupName[] = "Введите новое название группы:";
 constexpr char groupNameSaved[] = "Название группы сохранено ✅";
 constexpr char newGroupNameSaved[] = "Новое имя группы сохранено ✅";
@@ -75,14 +78,14 @@ const std::regex pattern(
 }
 
 namespace button_names {
-constexpr char makeDiscipline[] = "Создать дисциплину \uD83D\uDCDA";
-constexpr char stopMakingDiscipline[] = "Отменить создание дисциплины \uD83D\uDEAB";
+constexpr char makeDiscipline[] = "Создать дисциплину";
+constexpr char stopMakingDiscipline[] = "Отменить создание дисциплины";
 constexpr char buttonYes[] = "Да";
 constexpr char buttonNo[] = "Нет";
 constexpr char dontAddDescription[] = "Не добавлять описание";
-constexpr char createGroup[] = "Создать группу \uD83D\uDC65";
+constexpr char createGroup[] = "Создать группу";
 constexpr char editGroup[] = "Изменить имя группы ✏️";
-constexpr char deleteGroup[] = "Удалить группу \uD83D\uDDD1";
+constexpr char deleteGroup[] = "Удалить группу";
 }  // namespace button_names
 
 namespace button_data {
