@@ -11,18 +11,18 @@ enum class GroupState {
   WAITING_FOR_NEW_GROUP_NAME
 };
 
-std::unordered_map<int64_t, GroupState> userStates;
+std::unordered_map<int64_t, GroupState> userGroupStates;
 std::unordered_map<int64_t, Group*> userGroup;
 
 void setGroupState(int64_t userId, GroupState state) {
-  userStates[userId] = state;
+  userGroupStates[userId] = state;
 }
 
 GroupState getGroupState(int64_t userId) {
-  if (userStates.find(userId) == userStates.end()) {
+  if (userGroupStates.find(userId) == userGroupStates.end()) {
     return GroupState::NONE;
   }
-  return userStates[userId];
+  return userGroupStates[userId];
 }
 
 Group* getGroup(int64_t userId) {
