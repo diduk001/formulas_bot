@@ -64,7 +64,7 @@ int main() {
     } else if (query->data == button_data::dontAddDescription) {
       bot.getApi().sendMessage(userId,
                                messages::disciplineHaveNoDescription);
-      getSubject(userId)->set_description(standard_text::description_standard);
+      getSubject(userId)->set_description(standard_text::defaultDescription);
       bot.getApi().sendMessage(userId, getSubject(userId)->print_all());
       bot.getApi().sendMessage(
           userId, messages::checkDiscipline, nullptr, nullptr,
@@ -155,7 +155,10 @@ int main() {
                                    stop_making_discipline_keyboard);
         } else {
           bot.getApi().sendMessage(userId,
-                                   messages::disciplineWrongNameLength);
+                                   std::format(
+                                       messages::disciplineWrongNameLength,
+                                       lengths::min_discipline_name_length,
+                                       lengths::min_discipline_name_length));
         }
         break;
       case State::WAITING_FOR_PROFESSOR_NAME: {

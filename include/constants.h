@@ -22,7 +22,7 @@ namespace messages {
 // making
 constexpr char disciplineMakingNew[] = "Вы создаете новую дисциплину";
 constexpr char disciplineMakingCanceled[] = "Создание дисциплины отменено";
-constexpr char disciplineIsSaved[] = "Дисциплина сохранена в базе данных";
+constexpr char disciplineIsSaved[] = "Дисциплина сохранена в базе данных ✅";
 // description
 constexpr char disciplineHaveNoDescription[] = "В дисциплине не будет описания";
 constexpr char checkDiscipline[] = "Информация записана правильно?";
@@ -30,7 +30,7 @@ constexpr char checkDiscipline[] = "Информация записана пра
 constexpr char disciplineEnterName[] = "Введите название дисциплины";
 constexpr char disciplineEnterFullName[] = "Введите ФИ(О) преподавателя";
 constexpr char disciplineEnterEmail[] = "Введите почту преподавателя";
-constexpr char disciplineEnterDescription[] = "Введите описания предмета";
+constexpr char disciplineEnterDescription[] = "Введите описание дисциплины";
 // saved
 constexpr char disciplineProfessorNameSaved[] = "Имя преподавателя сохранено";
 constexpr char disciplineNameSaved[] = "Название дисциплины сохранено";
@@ -38,22 +38,21 @@ constexpr char disciplineEmailSaved[] = "Электронная почта со�
 constexpr char disciplineSaved[] = "Данные записаны правильно?";
 // wrong
 constexpr char disciplineWrongNameLength[] =
-    "Неправильная длина дисциплины\nДлина должна быть более:";
+    "Некорректная длина названия дисциплины\nДлина должна быть между {} и {}";
 constexpr char disciplineWrongFullName[] = "Неправильный формат ввода ФИ(О)";
 constexpr char disciplineWrongEmail[] =
     "Проверьте правильность ввода почты, впишите ее еще раз";
 constexpr char disciplineWrongDescription[] =
-    "Максимальная длина для описания {}";
+    "Максимальная длина для описания - {}";
 
-constexpr char discipline_what_want_to_do[] = "Что вы хотите сделать?";
-constexpr char welcomeMessage[] = "Привет!";
-constexpr char createdGroup[] = "Группа создана.";
-constexpr char deletedGroup[] = "Группа удалена.";
+constexpr char welcomeMessage[] = "Привет! Добро пожаловать в бота Formulin. Здесь ты можешь сохранить формулу по дисциплине и рассчитать оценку за предмет.\nДля начала, выбери свою группу и добавь дисциплину";
+constexpr char createdGroup[] = "✨Группа создана!✨";
+constexpr char deletedGroup[] = "Группа удалена \uD83D\uDDD1";
 constexpr char enterGroupName[] = "Введите название группы:";
 constexpr char enterNewGroupName[] = "Введите новое название группы:";
-constexpr char groupNameSaved[] = "Имя группы сохранено.";
-constexpr char newGroupNameSaved[] = "Новое имя группы сохранено.";
-constexpr char MenuTitle[] = "Меню.";
+constexpr char groupNameSaved[] = "Название группы сохранено ✅";
+constexpr char newGroupNameSaved[] = "Новое имя группы сохранено ✅";
+constexpr char MenuTitle[] = "Главное меню ✍️";
 }  // namespace messages
 
 namespace commands {
@@ -76,14 +75,14 @@ const std::regex pattern(
 }
 
 namespace button_names {
-constexpr char makeDiscipline[] = "Создать дисциплину";
-constexpr char stopMakingDiscipline[] = "Прервать создание дисциплины";
+constexpr char makeDiscipline[] = "Создать дисциплину \uD83D\uDCDA";
+constexpr char stopMakingDiscipline[] = "Отменить создание дисциплины \uD83D\uDEAB";
 constexpr char buttonYes[] = "Да";
 constexpr char buttonNo[] = "Нет";
 constexpr char dontAddDescription[] = "Не добавлять описание";
-constexpr char createGroup[] = "Создать группу";
-constexpr char editGroup[] = "Изменить имя группы";
-constexpr char deleteGroup[] = "Удалить группу";
+constexpr char createGroup[] = "Создать группу \uD83D\uDC65";
+constexpr char editGroup[] = "Изменить имя группы ✏️";
+constexpr char deleteGroup[] = "Удалить группу \uD83D\uDDD1";
 }  // namespace button_names
 
 namespace button_data {
@@ -98,7 +97,7 @@ constexpr char deleteGroup[] = "deleteGroup";
 }  // namespace button_data
 
 namespace standard_text {
-constexpr char description_standard[] = "Отсутствует";
+constexpr char defaultDescription[] = "Отсутствует";
 }
 
 namespace lengths {
