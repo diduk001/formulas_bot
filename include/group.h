@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include <utility>
 #ifndef INCLUDE_GROUP_H_
 #define INCLUDE_GROUP_H_
 
@@ -11,11 +12,10 @@ class Group {
  public:
   Group() : owner_id(0) {}
 
-  Group(const Group &other)
-    : group_name(other.group_name), owner_id(other.owner_id) {}
+  Group(const Group &other) = default;
 
   Group(std::string name, int64_t id) {
-    this->group_name = name;
+    this->group_name = std::move(name);
     this->owner_id = id;
   }
 
