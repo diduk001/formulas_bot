@@ -23,7 +23,7 @@ endif()
 # -- --
 
 add_subdirectory(lib/tgbot-cpp)
-add_executable(formulas_bot src/main.cpp include/constants.h include/db_utils.h)
+add_executable(formulas_bot src/main.cpp include/constants.h include/db_utils.h include/group.h include/state_utils.h)
 target_link_libraries(formulas_bot TgBot ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES} ${SQLite3_LIBRARIES})
 
 # Enable Google Tests
