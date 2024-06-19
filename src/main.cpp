@@ -104,9 +104,9 @@ int main() {
       commands::make_discipline, [&bot, stop_making_discipline_keyboard](
                              const TgBot::Message::Ptr& message) {
         int64_t userId = message->chat->id;
-        bot.getApi().sendMessage(userId, messages::disciplineMakingNew,
-                                 nullptr, nullptr,
-                                 stop_making_discipline_keyboard);
+        bot.getApi().sendMessage(userId, messages::disciplineMakingNew);
+        bot.getApi().sendMessage(userId, messages::disciplineEnterName, nullptr,
+                                 nullptr, stop_making_discipline_keyboard);
         setState(userId, State::WAITING_FOR_NAME);
       });
 
