@@ -1,7 +1,7 @@
 #include <tgbot/tgbot.h>
 
-#include <format>
 #include <cstdio>
+#include <format>
 
 #include "../include/constants.h"
 #include "../include/db_utils.h"
