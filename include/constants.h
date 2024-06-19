@@ -51,7 +51,7 @@ constexpr char welcomeMessage[] =
     "свою группу и добавь дисциплину";
 constexpr char createdGroup[] = "✨Группа создана!✨";
 constexpr char deletedGroup[] = "Группа удалена";
-    constexpr char enterGroupName[] = "Введите название группы:";
+constexpr char enterGroupName[] = "Введите название группы:";
 constexpr char enterNewGroupName[] = "Введите новое название группы:";
 constexpr char groupNameSaved[] = "Название группы сохранено ✅";
 constexpr char newGroupNameSaved[] = "Новое имя группы сохранено ✅";
@@ -64,10 +64,11 @@ constexpr char create_group[] = "create_group";
 constexpr char delete_group[] = "delete_group";
 constexpr char edit_group[] = "edit_group";
 constexpr char make_discipline[] = "make_discipline";
+constexpr char main_menu[] = "main_menu";
 
 const std::unordered_set<std::string> commands({start, create_group,
                                                 delete_group, edit_group,
-                                                make_discipline});
+                                                make_discipline, main_menu});
 }  // namespace commands
 
 namespace db_queries {}
@@ -86,6 +87,7 @@ constexpr char dontAddDescription[] = "Не добавлять описание"
 constexpr char createGroup[] = "Создать группу";
 constexpr char editGroup[] = "Изменить имя группы ✏️";
 constexpr char deleteGroup[] = "Удалить группу";
+constexpr char mainMenu[] = "Главное меню.";
 }  // namespace button_names
 
 namespace button_data {
@@ -97,6 +99,7 @@ constexpr char dontAddDescription[] = "dontAddDescription";
 constexpr char createGroup[] = "createGroup";
 constexpr char editGroup[] = "editGroup";
 constexpr char deleteGroup[] = "deleteGroup";
+constexpr char mainMenu[] = "mainMenu";
 }  // namespace button_data
 
 namespace standard_text {
@@ -170,6 +173,11 @@ TgBot::InlineKeyboardButton::Ptr deleteGroup(new TgBot::InlineKeyboardButton{
     button_names::deleteGroup, {}, button_data::deleteGroup});
 const TgBot::InlineKeyboardMarkup::Ptr deleteGroupKeyboard(
     new TgBot::InlineKeyboardMarkup);
+// main menu
+TgBot::InlineKeyboardButton::Ptr mainMenu(new TgBot::InlineKeyboardButton{
+    button_names::mainMenu, {}, button_data::mainMenu});
+const TgBot::InlineKeyboardMarkup::Ptr mainMenuKeyboard(
+    new TgBot::InlineKeyboardMarkup);
 
 void init_keyboards() {
   making_discipline_keyboard->inlineKeyboard = {{std::move(make_discipline)}};
@@ -183,6 +191,7 @@ void init_keyboards() {
   createGroupKeyboard->inlineKeyboard = {{std::move(createGroup)}};
   deleteGroupKeyboard->inlineKeyboard = {{std::move(deleteGroup)}};
   editGroupKeyboard->inlineKeyboard = {{std::move(editGroup)}};
+  mainMenuKeyboard->inlineKeyboard = {{std::move(mainMenu)}};
 }
 
 }  // namespace keyboards
