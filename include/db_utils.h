@@ -23,6 +23,27 @@ void init_conn() {
 }
 
 void close_conn() { sqlite3_close(db_conn); }
+
+TgBot::InlineKeyboardMarkup::Ptr make_MainMenuKeyboard(TgBot::Bot &bot) {
+  // открываем бд
+
+  // Создаем запрос который даст нам имена всех груп пользователя
+  // В соответствии с запросом берем из бд имена и конвертируем их в кнопки
+  const TgBot::InlineKeyboardMarkup::Ptr MenuKeyboard(new TgBot::InlineKeyboardMarkup);
+  /*
+  while (sqlite3_step(statement) == SQLITE_ROW) {
+      TgBot::InlineKeyboardButton::Ptr GroupButton(new TgBot::InlineKeyboardButton);
+      GroupButton->text = reinterpret_cast<const char *>(sqlite3_column_text(statement, 1));
+      GroupButton->callbackData= std::to_string(sqlite3_column_int(statement, 0));
+      MenuKeyboard->inlineKeyboard = {{std::move(GroupButton)}};
+  }*/
+
+  MenuKeyboard->inlineKeyboard = {{std::move(keyboards::createGroup)}};
+
+  // закрываем бд
+  return MenuKeyboard;
+}
+
 }  // namespace db
 
 #endif  // INCLUDE_DB_UTILS_H_

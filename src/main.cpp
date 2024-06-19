@@ -23,6 +23,7 @@ int main() {
       keyboards::discipline_confirmation_keyboard;
   const auto& dont_add_description_keyboard =
       keyboards::dont_add_description_keyboard;
+  const auto& mainMenuKeyboard = keyboards::mainMenuKeyboard;
 
   db::init_conn();
 
@@ -70,8 +71,16 @@ int main() {
           userId, messages::checkDiscipline, nullptr, nullptr,
           discipline_confirmation_keyboard);
       setState(userId, State::NONE);
+    } else if (query->data == button_data::mainMenu) {
+      TgBot::InlineKeyboardMarkup::Ptr MenuKeyboard = db::make_MainMenuKeyboard(bot);
+      bot.getApi().sendMessage(query->message->chat->id, messages::MenuTitle, nullptr, nullptr, MenuKeyboard);
     }
   });
+
+  bot.getEvents().onCommand(
+    commands::main_menu,[&bot, mainMenuKeyboard](const TgBot::Message::Ptr& message){
+      bot.getApi().sendMessage(message->chat->id, messages::MenuTitle, nullptr, nullptr, mainMenuKeyboard);
+    });
 
   bot.getEvents().onCommand(
       commands::start, [&bot](const TgBot::Message::Ptr& message) {
