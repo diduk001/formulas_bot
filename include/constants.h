@@ -9,14 +9,14 @@
 #include <utility>
 #include <regex>
 #include <string>
+#include <utility>
 
 namespace consts {
 // TODO(diduk001): проверять регексом в compile-time
-constexpr char TOKEN[] = "...";
-constexpr char DB_NAME[] = "../chinook.db";
+constexpr char token[] = "7041771878:AAF4sXHwXYmFLGfE5BFMjcvRt5KBGPlTtEw";
+constexpr char dbName[] = "../chinook.db";
 }  // namespace consts
 namespace messages {
-constexpr char HI[] = "Здарова шершень";
 // making
 constexpr char discipline_making_new[] = "Вы создаете новую дисциплину";
 constexpr char discipline_making_canceled[] = "Создание дисциплины отменено";
@@ -40,8 +40,6 @@ constexpr char discipline_saved[] = "Данные записаны правил�
 // wrong
 constexpr char discipline_wrong_name_length[] =
     "Неправильная длина дисциплины\nДлина должна быть более:";
-// TODO(diduk001):
-// даделатб
 constexpr char discipline_wrong_full_name[] = "Неправильный формат ввода ФИ(О)";
 constexpr char discipline_wrong_email[] =
     "Проверьте правильность ввода почты, впишите ее еще раз";
@@ -49,12 +47,24 @@ constexpr char discipline_wrong_describe[] =
     "Максимальная длина для описания {}";
 
 constexpr char discipline_what_want_to_do[] = "Что вы хотите сделать?";
+constexpr char welcomeMessage[] = "Привет!";
+constexpr char createdGroup[] = "Группа создана.";
+constexpr char deletedGroup[] = "Группа удалена.";
+constexpr char enterGroupName[] = "Введите название группы:";
+constexpr char enterNewGroupName[] = "Введите новое название группы:";
+constexpr char groupNameSaved[] = "Имя группы сохранено.";
+constexpr char newGroupNameSaved[] = "Новое имя группы сохранено.";
+constexpr char MenuTitle[] = "Меню.";
 }  // namespace messages
 
-namespace db_queries {
-constexpr char basic_where_from_customers[] =
-    "SELECT FirstName FROM customers WHERE Country=?";
-}
+namespace commands {
+constexpr char start[] = "start";
+constexpr char create_group[] = "create_group";
+constexpr char delete_group[] = "delete_group";
+constexpr char edit_group[] = "edit_group";
+}  // namespace commands
+
+namespace db_queries {}
 
 namespace regular_expressions {
 const std::regex pattern(
@@ -67,6 +77,9 @@ constexpr char stop_making_discipline[] = "Прервать создание д�
 constexpr char button_yes[] = "Да";
 constexpr char button_no[] = "Нет";
 constexpr char dont_add_description[] = "Не добавлять описание";
+constexpr char createGroup[] = "Создать группу";
+constexpr char editGroup[] = "Изменить имя группы";
+constexpr char deleteGroup[] = "Удалить группу";
 }  // namespace button_names
 
 namespace button_data {
@@ -75,6 +88,9 @@ constexpr char stop_making_discipline[] = "stop making discipline";
 constexpr char discipline_confirmation_yes[] = "discipline confirmed";
 constexpr char discipline_confirmation_no[] = "discipline not confirmed";
 constexpr char dont_add_description[] = "dont add";
+constexpr char createGroup[] = "createGroup";
+constexpr char editGroup[] = "editGroup";
+constexpr char deleteGroup[] = "deleteGroup";
 }  // namespace button_data
 
 namespace standard_text {
@@ -132,6 +148,23 @@ TgBot::InlineKeyboardButton::Ptr dont_add_description(
 const TgBot::InlineKeyboardMarkup::Ptr dont_add_description_keyboard(
     new TgBot::InlineKeyboardMarkup);
 
+// create group
+TgBot::InlineKeyboardButton::Ptr createGroup(new TgBot::InlineKeyboardButton{
+    button_names::createGroup, {}, button_data::createGroup});
+const TgBot::InlineKeyboardMarkup::Ptr createGroupKeyboard(
+    new TgBot::InlineKeyboardMarkup);
+
+// edit group
+TgBot::InlineKeyboardButton::Ptr editGroup(new TgBot::InlineKeyboardButton{
+    button_names::editGroup, {}, button_data::editGroup});
+const TgBot::InlineKeyboardMarkup::Ptr editGroupKeyboard(
+    new TgBot::InlineKeyboardMarkup);
+// delete group
+TgBot::InlineKeyboardButton::Ptr deleteGroup(new TgBot::InlineKeyboardButton{
+    button_names::deleteGroup, {}, button_data::deleteGroup});
+const TgBot::InlineKeyboardMarkup::Ptr deleteGroupKeyboard(
+    new TgBot::InlineKeyboardMarkup);
+
 void init_keyboards() {
   making_discipline_keyboard->inlineKeyboard = {{std::move(make_discipline)}};
   stop_making_discipline_keyboard->inlineKeyboard = {
@@ -141,6 +174,9 @@ void init_keyboards() {
        std::move(discipline_confirmation_no)}};
   dont_add_description_keyboard->inlineKeyboard = {
       {std::move(dont_add_description)}};
+  createGroupKeyboard->inlineKeyboard = {{std::move(createGroup)}};
+  deleteGroupKeyboard->inlineKeyboard = {{std::move(deleteGroup)}};
+  editGroupKeyboard->inlineKeyboard = {{std::move(editGroup)}};
 }
 
 }  // namespace keyboards
