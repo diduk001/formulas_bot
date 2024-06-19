@@ -48,6 +48,7 @@ void eraseStateAndSubject(int64_t userId) {
     userStates.erase(userId);
     userSubject.erase(userId);
   }
+}
 
 void setGroupState(int64_t userId, GroupState state) {
   userGroupStates[userId] = state;

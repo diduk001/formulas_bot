@@ -6,9 +6,10 @@
 #define INCLUDE_CONSTANTS_H_
 
 #include <tgbot/tgbot.h>
-#include <utility>
+
 #include <regex>
 #include <string>
+#include <unordered_set>
 #include <utility>
 
 namespace consts {
@@ -16,34 +17,32 @@ namespace consts {
 constexpr char token[] = "7041771878:AAF4sXHwXYmFLGfE5BFMjcvRt5KBGPlTtEw";
 constexpr char dbName[] = "../chinook.db";
 }  // namespace consts
+
 namespace messages {
 // making
-constexpr char discipline_making_new[] = "Вы создаете новую дисциплину";
-constexpr char discipline_making_canceled[] = "Создание дисциплины отменено";
-constexpr char discipline_is_saved[] = "Дисциплина сохранена в базе данных";
+constexpr char disciplineMakingNew[] = "Вы создаете новую дисциплину";
+constexpr char disciplineMakingCanceled[] = "Создание дисциплины отменено";
+constexpr char disciplineIsSaved[] = "Дисциплина сохранена в базе данных";
 // description
-constexpr char discipline_have_no_description[] =
-    "В дисциплине не будет описания";
-constexpr char discipline_is_correct_description[] =
-    "Информация записана правильно?";
+constexpr char disciplineHaveNoDescription[] = "В дисциплине не будет описания";
+constexpr char checkDiscipline[] = "Информация записана правильно?";
 // enter
-constexpr char discipline_enter_name[] = "Введите название дисциплины";
-constexpr char discipline_enter_full_name[] = "Введите ФИ(О) преподавателя";
-constexpr char discipline_enter_email[] = "Введите почту преподавателя";
-constexpr char discipline_enter_description[] = "Введите описания предмета";
+constexpr char disciplineEnterName[] = "Введите название дисциплины";
+constexpr char disciplineEnterFullName[] = "Введите ФИ(О) преподавателя";
+constexpr char disciplineEnterEmail[] = "Введите почту преподавателя";
+constexpr char disciplineEnterDescription[] = "Введите описания предмета";
 // saved
-constexpr char discipline_professor_name_saved[] =
-    "Имя преподавателя сохранено";
-constexpr char discipline_name_saved[] = "Название дисциплины сохранено";
-constexpr char discipline_email_saved[] = "Электронная почта сохранена";
-constexpr char discipline_saved[] = "Данные записаны правильно?";
+constexpr char disciplineProfessorNameSaved[] = "Имя преподавателя сохранено";
+constexpr char disciplineNameSaved[] = "Название дисциплины сохранено";
+constexpr char disciplineEmailSaved[] = "Электронная почта сохранена";
+constexpr char disciplineSaved[] = "Данные записаны правильно?";
 // wrong
-constexpr char discipline_wrong_name_length[] =
+constexpr char disciplineWrongNameLength[] =
     "Неправильная длина дисциплины\nДлина должна быть более:";
-constexpr char discipline_wrong_full_name[] = "Неправильный формат ввода ФИ(О)";
-constexpr char discipline_wrong_email[] =
+constexpr char disciplineWrongFullName[] = "Неправильный формат ввода ФИ(О)";
+constexpr char disciplineWrongEmail[] =
     "Проверьте правильность ввода почты, впишите ее еще раз";
-constexpr char discipline_wrong_describe[] =
+constexpr char disciplineWrongDescription[] =
     "Максимальная длина для описания {}";
 
 constexpr char discipline_what_want_to_do[] = "Что вы хотите сделать?";
@@ -62,6 +61,11 @@ constexpr char start[] = "start";
 constexpr char create_group[] = "create_group";
 constexpr char delete_group[] = "delete_group";
 constexpr char edit_group[] = "edit_group";
+constexpr char make_discipline[] = "make_discipline";
+
+const std::unordered_set<std::string> commands({start, create_group,
+                                                delete_group, edit_group,
+                                                make_discipline});
 }  // namespace commands
 
 namespace db_queries {}
@@ -72,22 +76,22 @@ const std::regex pattern(
 }
 
 namespace button_names {
-constexpr char make_discipline[] = "Создать дисциплину";
-constexpr char stop_making_discipline[] = "Прервать создание дисциплины";
-constexpr char button_yes[] = "Да";
-constexpr char button_no[] = "Нет";
-constexpr char dont_add_description[] = "Не добавлять описание";
+constexpr char makeDiscipline[] = "Создать дисциплину";
+constexpr char stopMakingDiscipline[] = "Прервать создание дисциплины";
+constexpr char buttonYes[] = "Да";
+constexpr char buttonNo[] = "Нет";
+constexpr char dontAddDescription[] = "Не добавлять описание";
 constexpr char createGroup[] = "Создать группу";
 constexpr char editGroup[] = "Изменить имя группы";
 constexpr char deleteGroup[] = "Удалить группу";
 }  // namespace button_names
 
 namespace button_data {
-constexpr char make_discipline[] = "make discipline";
-constexpr char stop_making_discipline[] = "stop making discipline";
-constexpr char discipline_confirmation_yes[] = "discipline confirmed";
-constexpr char discipline_confirmation_no[] = "discipline not confirmed";
-constexpr char dont_add_description[] = "dont add";
+constexpr char makeDiscipline[] = "makeDiscipline";
+constexpr char stopMakingDiscipline[] = "stopMakingDiscipline";
+constexpr char disciplineConfirmed[] = "disciplineConfirmed";
+constexpr char disciplineNotConfirmed[] = "disciplineNotConfirmed";
+constexpr char dontAddDescription[] = "dontAddDescription";
 constexpr char createGroup[] = "createGroup";
 constexpr char editGroup[] = "editGroup";
 constexpr char deleteGroup[] = "deleteGroup";
@@ -108,42 +112,42 @@ namespace keyboards {
 // making discipline
 TgBot::InlineKeyboardButton::Ptr make_discipline(
     new TgBot::InlineKeyboardButton{
-        button_names::make_discipline,
+        button_names::makeDiscipline,
         {},
-        button_data::make_discipline,
+        button_data::makeDiscipline,
     });
 const TgBot::InlineKeyboardMarkup::Ptr making_discipline_keyboard(
     new TgBot::InlineKeyboardMarkup);
 
 TgBot::InlineKeyboardButton::Ptr stop_making_discipline(
     new TgBot::InlineKeyboardButton{
-        button_names::stop_making_discipline,
+        button_names::stopMakingDiscipline,
         {},
-        button_data::stop_making_discipline,
+        button_data::stopMakingDiscipline,
     });
 const TgBot::InlineKeyboardMarkup::Ptr stop_making_discipline_keyboard(
     new TgBot::InlineKeyboardMarkup);
 
 TgBot::InlineKeyboardButton::Ptr discipline_confirmation_yes(
     new TgBot::InlineKeyboardButton{
-        button_names::button_yes,
+        button_names::buttonYes,
         {},
-        button_data::discipline_confirmation_yes,
+        button_data::disciplineConfirmed,
     });
 TgBot::InlineKeyboardButton::Ptr discipline_confirmation_no(
     new TgBot::InlineKeyboardButton{
-        button_names::button_no,
+        button_names::buttonNo,
         {},
-        button_data::discipline_confirmation_no,
+        button_data::disciplineNotConfirmed,
     });
 const TgBot::InlineKeyboardMarkup::Ptr discipline_confirmation_keyboard(
     new TgBot::InlineKeyboardMarkup);
 
 TgBot::InlineKeyboardButton::Ptr dont_add_description(
     new TgBot::InlineKeyboardButton{
-        button_names::dont_add_description,
+        button_names::dontAddDescription,
         {},
-        button_data::dont_add_description,
+        button_data::dontAddDescription,
     });
 const TgBot::InlineKeyboardMarkup::Ptr dont_add_description_keyboard(
     new TgBot::InlineKeyboardMarkup);
