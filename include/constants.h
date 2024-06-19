@@ -51,7 +51,7 @@ constexpr char welcomeMessage[] =
     "свою группу и добавь дисциплину";
 constexpr char createdGroup[] = "✨Группа создана!✨";
 constexpr char deletedGroup[] = "Группа удалена";
-    constexpr char enterGroupName[] = "Введите название группы:";
+constexpr char enterGroupName[] = "Введите название группы:";
 constexpr char enterNewGroupName[] = "Введите новое название группы:";
 constexpr char groupNameSaved[] = "Название группы сохранено ✅";
 constexpr char newGroupNameSaved[] = "Новое имя группы сохранено ✅";
@@ -68,8 +68,7 @@ constexpr char main_menu[] = "main_menu";
 
 const std::unordered_set<std::string> commands({start, create_group,
                                                 delete_group, edit_group,
-                                                make_discipline,
-                                                main_menu});
+                                                make_discipline, main_menu});
 }  // namespace commands
 
 namespace db_queries {}
@@ -174,12 +173,9 @@ TgBot::InlineKeyboardButton::Ptr deleteGroup(new TgBot::InlineKeyboardButton{
     button_names::deleteGroup, {}, button_data::deleteGroup});
 const TgBot::InlineKeyboardMarkup::Ptr deleteGroupKeyboard(
     new TgBot::InlineKeyboardMarkup);
-//main menu
+// main menu
 TgBot::InlineKeyboardButton::Ptr mainMenu(new TgBot::InlineKeyboardButton{
-    button_names::mainMenu,
-    {},
-    button_data::mainMenu
-});
+    button_names::mainMenu, {}, button_data::mainMenu});
 const TgBot::InlineKeyboardMarkup::Ptr mainMenuKeyboard(
     new TgBot::InlineKeyboardMarkup);
 

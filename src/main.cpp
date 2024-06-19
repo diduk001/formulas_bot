@@ -1,8 +1,7 @@
 #include <tgbot/tgbot.h>
 
-#include <format>
-
 #include <cstdio>
+#include <format>
 
 #include "../include/constants.h"
 #include "../include/db_utils.h"
@@ -34,8 +33,8 @@ int main() {
                                    making_discipline_keyboard,
                                    stop_making_discipline_keyboard,
                                    discipline_confirmation_keyboard,
-                                   dont_add_description_keyboard]
-                                  (const TgBot::CallbackQuery::Ptr& query) {
+                                   dont_add_description_keyboard](
+                                      const TgBot::CallbackQuery::Ptr& query) {
     int64_t userId = query->message->chat->id;
     if (query->data == button_data::createGroup) {
       getGroup(userId)->set_owner_id(userId);
@@ -63,24 +62,26 @@ int main() {
     } else if (query->data == button_data::disciplineConfirmed) {
       bot.getApi().sendMessage(userId, messages::disciplineIsSaved);
     } else if (query->data == button_data::dontAddDescription) {
-      bot.getApi().sendMessage(userId,
-                               messages::disciplineHaveNoDescription);
+      bot.getApi().sendMessage(userId, messages::disciplineHaveNoDescription);
       getSubject(userId)->set_description(standard_text::defaultDescription);
       bot.getApi().sendMessage(userId, getSubject(userId)->print_all());
-      bot.getApi().sendMessage(
-          userId, messages::checkDiscipline, nullptr, nullptr,
-          discipline_confirmation_keyboard);
+      bot.getApi().sendMessage(userId, messages::checkDiscipline, nullptr,
+                               nullptr, discipline_confirmation_keyboard);
       setState(userId, State::NONE);
     } else if (query->data == button_data::mainMenu) {
-      TgBot::InlineKeyboardMarkup::Ptr MenuKeyboard = db::make_MainMenuKeyboard(bot);
-      bot.getApi().sendMessage(query->message->chat->id, messages::MenuTitle, nullptr, nullptr, MenuKeyboard);
+      TgBot::InlineKeyboardMarkup::Ptr MenuKeyboard =
+          db::make_MainMenuKeyboard(bot);
+      bot.getApi().sendMessage(query->message->chat->id, messages::MenuTitle,
+                               nullptr, nullptr, MenuKeyboard);
     }
   });
 
   bot.getEvents().onCommand(
-    commands::main_menu,[&bot, mainMenuKeyboard](const TgBot::Message::Ptr& message){
-      bot.getApi().sendMessage(message->chat->id, messages::MenuTitle, nullptr, nullptr, mainMenuKeyboard);
-    });
+      commands::main_menu,
+      [&bot, mainMenuKeyboard](const TgBot::Message::Ptr& message) {
+        bot.getApi().sendMessage(message->chat->id, messages::MenuTitle,
+                                 nullptr, nullptr, mainMenuKeyboard);
+      });
 
   bot.getEvents().onCommand(
       commands::start, [&bot](const TgBot::Message::Ptr& message) {
@@ -112,7 +113,7 @@ int main() {
 
   bot.getEvents().onCommand(
       commands::make_discipline, [&bot, stop_making_discipline_keyboard](
-                             const TgBot::Message::Ptr& message) {
+                                     const TgBot::Message::Ptr& message) {
         int64_t userId = message->chat->id;
         bot.getApi().sendMessage(userId, messages::disciplineMakingNew);
         bot.getApi().sendMessage(userId, messages::disciplineEnterName, nullptr,
@@ -163,11 +164,10 @@ int main() {
                                    nullptr, nullptr,
                                    stop_making_discipline_keyboard);
         } else {
-          bot.getApi().sendMessage(userId,
-                                   std::format(
-                                       messages::disciplineWrongNameLength,
-                                       lengths::min_discipline_name_length,
-                                       lengths::min_discipline_name_length));
+          bot.getApi().sendMessage(
+              userId, std::format(messages::disciplineWrongNameLength,
+                                  lengths::min_discipline_name_length,
+                                  lengths::min_discipline_name_length));
         }
         break;
       case State::WAITING_FOR_PROFESSOR_NAME: {
@@ -176,14 +176,13 @@ int main() {
         if (spaceCount >= lengths::minimal_space_count_in_name) {
           getSubject(userId)->set_professor_name(message->text);
           bot.getApi().sendMessage(
-              userId, messages::disciplineProfessorNameSaved, nullptr,
-              nullptr, stop_making_discipline_keyboard);
+              userId, messages::disciplineProfessorNameSaved, nullptr, nullptr,
+              stop_making_discipline_keyboard);
           setState(userId, State::WAITING_FOR_PROFESSOR_EMAIL);
           bot.getApi().sendMessage(userId, messages::disciplineEnterEmail,
                                    nullptr, nullptr);
         } else {
-          bot.getApi().sendMessage(userId,
-                                   messages::disciplineWrongFullName);
+          bot.getApi().sendMessage(userId, messages::disciplineWrongFullName);
         }
       } break;
       case State::WAITING_FOR_PROFESSOR_EMAIL:
@@ -193,9 +192,9 @@ int main() {
                                    nullptr, nullptr,
                                    stop_making_discipline_keyboard);
           setState(userId, State::WAITING_FOR_DESCRIPTION);
-          bot.getApi().sendMessage(
-              userId, messages::disciplineEnterDescription, nullptr, nullptr,
-              dont_add_description_keyboard);
+          bot.getApi().sendMessage(userId, messages::disciplineEnterDescription,
+                                   nullptr, nullptr,
+                                   dont_add_description_keyboard);
         } else {
           bot.getApi().sendMessage(userId, messages::disciplineWrongEmail);
         }
